@@ -3,6 +3,7 @@
 // A node.js module, which provides an object oriented wrapper for the JIRA REST API.
 // 
 // This library is built to support version `2.0.alpha1` of the JIRA REST API.
+// This library is also tested with version `2` of the JIRA REST API
 // 
 // JIRA REST API documentation can be found [here](http://docs.atlassian.com/jira/REST/latest/)
 // 
@@ -34,27 +35,28 @@
 // 
 // Currently there is no explicit login call necessary as each API call makes a call to `login` before processing. This causes a lot of unnecessary logins and will be cleaned up in a future version.
 // 
-// ## Implemented APIs
-// 
-// * Authentication
-// * Pulling an issue
-// * Pulling a project
-// * Pulling unresolved issues count for a specific version
-// * Issue linking
-// * Pulling versions
-// * Adding a new version
-// * Find a Rapid View based on project name
-// * Get the latest Green Hopper sprint for a Rapid View
-// * Add an issue to a sprint
-// 
-// ## TODO
-// 
-// * API docs
-//  * Better most methods are currently undocumented
-// * Tests
-// * Refactor currently implemented APIs to be more Object Oriented
-// * Refactor to make use of built-in node.js events and classes
-// * Auto-redirect between `http` and `https` following headers
+// *  Authentication
+// *  Projects
+//   *  Pulling a project
+//   *  List all projects viewable to the user
+// *  Versions
+//   *  Pulling versions
+//   *  Adding a new version
+//   *  Pulling unresolved issues count for a specific version
+// *  Find a Rapid View based on project name
+// *  Get the latest Green Hopper sprint for a Rapid View
+// *  Issues
+//   *  Add a new issue
+//   *  Update an issue
+//   *  Transition an issue
+//   *  Pulling an issue
+//   *  Issue linking
+//   *  Add an issue to a sprint
+//   *  Get a users issues (open or all)
+//   *  List issue types
+//   *  Add a worklog
+// *  Transitions
+//   *  List
 //
 //
 var http = require('http'),
@@ -768,6 +770,85 @@ var JiraApi = exports.JiraApi = function(protocol, host, port, username, passwor
             });
         });
     };
+    // ## List Transitions ##
+    // ### Takes ###
+    //
+    // *  issueId: get transitions available for the issue
+    // *  callback: for when it's done
+    //
+    // ### Returns ###
+    // *  error string
+    // *  array of transitions
+    //
+    // [Jira Doc](http://docs.atlassian.com/jira/REST/latest/#id290489)
+    /*
+     *  {
+     *  "expand": "transitions",
+     *  "transitions": [
+     *      {
+     *          "id": "2",
+     *          "name": "Close Issue",
+     *          "to": {
+     *              "self": "http://localhost:8090/jira/rest/api/2.0/status/10000",
+     *              "description": "The issue is currently being worked on.",
+     *              "iconUrl": "http://localhost:8090/jira/images/icons/progress.gif",
+     *              "name": "In Progress",
+     *              "id": "10000"
+     *          },
+     *          "fields": {
+     *              "summary": {
+     *                  "required": false,
+     *                  "schema": {
+     *                      "type": "array",
+     *                      "items": "option",
+     *                      "custom": "com.atlassian.jira.plugin.system.customfieldtypes:multiselect",
+     *                      "customId": 10001
+     *                  },
+     *                  "name": "My Multi Select",
+     *                  "operations": [
+     *                      "set",
+     *                      "add"
+     *                  ],
+     *                  "allowedValues": [
+     *                      "red",
+     *                      "blue"
+     *                  ]
+     *              }
+     *          }
+     *      }
+     *  ]}
+     */
+    this.listTransitions = function(issueId, callback) {
+        var self = this;
+
+        this.login(function() {
+            var options = {
+                uri: url.format({
+                    protocol:  self.protocol,
+                    host: self.host,
+                    port: self.port,
+                    pathname: 'rest/api/' + self.apiVersion + '/issue/' + issueId + '/transitions'
+                }),
+                method: 'GET',
+                json: true,
+                headers: {
+                    Cookie: self.cookies.join(';')
+                }
+            };
+
+            request(options, function(error, response, body) {
+                if (response.statusCode === 200) {
+                    callback(null, body.transitions);
+                    return;
+                }
+                if (response.statusCode === 404) {
+                    callback("Issue not found");
+                }
+
+                callback(response.statusCode + ': Error while updating');
+            });
+        });
+    };
     // ## Transition issue in Jira ##
     // ### Takes ###
     //
@@ -808,4 +889,182 @@ var JiraApi = exports.JiraApi = function(protocol, host, port, username, passwor
             });
         });
     };
+    
+    // ## List all Viewable Projects ##
+    // ### Takes ###
+    //
+    // *  callback: for when it's done
+    //
+    // ### Returns ###
+    // *  error string
+    // *  array of projects
+    //
+    // [Jira Doc](http://docs.atlassian.com/jira/REST/latest/#id289193)
+    /*
+     * Result items are in the format:
+     * {
+     *      "self": "http://www.example.com/jira/rest/api/2/project/ABC",
+     *      "id": "10001",
+     *      "key": "ABC",
+     *      "name": "Alphabetical",
+     *      "avatarUrls": {
+     *          "16x16": "http://www.example.com/jira/secure/projectavatar?size=small&pid=10001",
+     *          "48x48": "http://www.example.com/jira/secure/projectavatar?size=large&pid=10001"
+     *      }
+     * }
+     */
+    this.listProjects = function(callback) {
+        var self = this;
+
+        this.login(function() {
+            var options = {
+                uri: url.format({
+                    protocol:  self.protocol,
+                    host: self.host,
+                    port: self.port,
+                    pathname: 'rest/api/' + self.apiVersion + '/project'
+                }),
+                method: 'GET',
+                json: true,
+                headers: {
+                    Cookie: self.cookies.join(';')
+                }
+            };
+
+            request(options, function(error, response, body) {
+                if (response.statusCode === 200) {
+                    callback(null, body);
+                    return;
+                }
+                if (response.statusCode === 500) {
+                    callback(response.statusCode + ': Error while retrieving list.');
+                }
+
+                callback(response.statusCode + ': Error while updating');
+            });
+        });
+    };
+    // ## Add a worklog to a project ##
+    // ### Takes ###
+    // *  issueId: Issue to add a worklog to
+    // *  worklog: worklog object
+    // *  callback: for when it's done
+    //
+    // ### Returns ###
+    // *  error string
+    // *  success string
+    //
+    // [Jira Doc](http://docs.atlassian.com/jira/REST/latest/#id291617)
+    /*
+     * Worklog item is in the format:
+     *  {
+     *      "self": "http://www.example.com/jira/rest/api/2.0/issue/10010/worklog/10000",
+     *      "author": {
+     *          "self": "http://www.example.com/jira/rest/api/2.0/user?username=fred",
+     *          "name": "fred",
+     *          "displayName": "Fred F. User",
+     *          "active": false
+     *      },
+     *      "updateAuthor": {
+     *          "self": "http://www.example.com/jira/rest/api/2.0/user?username=fred",
+     *          "name": "fred",
+     *          "displayName": "Fred F. User",
+     *          "active": false
+     *      },
+     *      "comment": "I did some work here.",
+     *      "visibility": {
+     *          "type": "group",
+     *          "value": "jira-developers"
+     *      },
+     *      "started": "2012-11-22T04:19:46.736-0600",
+     *      "timeSpent": "3h 20m",
+     *      "timeSpentSeconds": 12000,
+     *      "id": "100028"
+     *  }
+     */
+    this.addWorklog = function(issueId, worklog, callback) {
+        var self = this;
+
+        this.login(function() {
+            var options = {
+                uri: url.format({
+                    protocol:  self.protocol,
+                    host: self.host,
+                    port: self.port,
+                    pathname: 'rest/api/' + self.apiVersion + '/issue/' + issueId + '/worklog'
+                }),
+                body: worklog,
+                method: 'POST',
+                json: true,
+                headers: {
+                    Cookie: self.cookies.join(';')
+                }
+            };
+
+            request(options, function(error, response, body) {
+                if (response.statusCode === 201) {
+                    callback(null, "Success");
+                    return;
+                }
+                if (response.statusCode === 400) {
+                    callback("Invalid Fields: " + JSON.stringify(body));
+                    return;
+                }
+                if (response.statusCode === 403) {
+                    callback("Insufficient Permissions");
+                    return;
+                }
+                callback(response.statusCode + ': Error while updating');
+            });
+        });
+    };
+    // ## List all Issue Types ##
+    // ### Takes ###
+    //
+    // *  callback: for when it's done
+    //
+    // ### Returns ###
+    // *  error string
+    // *  array of types
+    //
+    // [Jira Doc](http://docs.atlassian.com/jira/REST/latest/#id295946)
+    /*
+     * Result items are in the format:
+     * {
+     *  "self": "http://localhost:8090/jira/rest/api/2.0/issueType/3",
+     *  "id": "3",
+     *  "description": "A task that needs to be done.",
+     *  "iconUrl": "http://localhost:8090/jira/images/icons/task.gif",
+     *  "name": "Task",
+     *  "subtask": false
+     * }
+     */
+    this.listIssueTypes = function(callback) {
+        var self = this;
+
+        this.login(function() {
+            var options = {
+                uri: url.format({
+                    protocol:  self.protocol,
+                    host: self.host,
+                    port: self.port,
+                    pathname: 'rest/api/' + self.apiVersion + '/issuetype'
+                }),
+                method: 'GET',
+                json: true,
+                headers: {
+                    Cookie: self.cookies.join(';')
+                }
+            };
+
+            request(options, function(error, response, body) {
+                if (response.statusCode === 200) {
+                    callback(null, body);
+                    return;
+                }
+                callback(response.statusCode + ': Error while retreiving issue types');
+            });
+        });
+    };
+
 }).call(JiraApi.prototype);
