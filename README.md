@@ -49,6 +49,7 @@ JiraApi options:
 *  `Jira API Version<string>`: Known to work with `2` and `2.0.alpha1`
 *  `verbose<bool>`: Log some info to the console, usually for debugging
 *  `strictSSL<bool>`: Set to false if you have self-signed certs or something non-trustworthy
+*  `proxy<string>`: Set to a string like `http://company.com:port/` (same syntax as [request](https://npmjs.org/package/request)).
 
 ## Implemented APIs ##
 
