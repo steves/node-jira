@@ -127,14 +127,14 @@ describe "Node Jira Tests", ->
 
         expect(@cb).toHaveBeenCalledWith null, name: 'ABC'
 
-    it "Gets the last sprint for a Rapid View", ->
+    it "Gets a list of sprints for a Rapid View", ->
         options =
             rejectUnauthorized: true
-            uri: makeUrl("sprints/1", true)
+            uri: makeUrl("sprintquery/1", true)
             method: 'GET'
             json: true
 
-        @jira.getLastSprintForRapidView 1, @cb
+        @jira.getAllSprintsForRapidView 1, @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
 
         # Invalid URL 
@@ -149,9 +149,27 @@ describe "Node Jira Tests", ->
         @jira.request.mostRecentCall.args[1] null,
             statusCode:200,
             body:
-                sprints: [name: 'ABC']
+                sprints: [name: 'ABC', name: 'DEF']
 
-        expect(@cb).toHaveBeenCalledWith null, name: 'ABC'
+        expect(@cb).toHaveBeenCalledWith null, [name: 'ABC', name: 'DEF']
+
+    it "Gets the last sprint for a Rapid View", ->
+        options =
+            rejectUnauthorized: true
+            uri: makeUrl("sprintquery/1", true)
+            method: 'GET'
+            json: true
+
+        spyOn @jira, 'getAllSprintsForRapidView'
+
+        @jira.getLastSprintForRapidView 1, @cb
+        expect(@jira.getAllSprintsForRapidView).toHaveBeenCalledWith(1, jasmine.any(Function))
+
+        # Successful Request
+        @jira.getAllSprintsForRapidView.mostRecentCall.args[1] null,
+            [name: 'ABC', name: 'DEF']
+
+        expect(@cb).toHaveBeenCalledWith null, name: 'DEF'
         
     it "Adds an issue to a sprint", ->
         options =
