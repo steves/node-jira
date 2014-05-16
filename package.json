@@ -4,6 +4,7 @@
   "description": "Wrapper for the JIRA API",
   "author": "Steven Surowiec <steven.surowiec@gmail.com>",
   "contributors": [
+    "Anton Rudeshko <anton@rudeshko.com>",
     "Chris Moultrie <chris@moultrie.org>"
   ],
   "homepage": "http://github.com/steves/node-jira",
