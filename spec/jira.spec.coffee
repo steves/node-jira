@@ -76,12 +76,12 @@ describe "Node Jira Tests", ->
 
         # Invalid issue number (different than unable to find??)
         @jira.request.mostRecentCall.args[1] null, statusCode:404, null
-        expect(@cb).toHaveBeenCalledWith 'Invalid issue number.'
+        expect(@cb).toHaveBeenCalledWith 'Invalid issue number.', null
 
         # Unable to find issue
         @jira.request.mostRecentCall.args[1] null, statusCode:401, null
         expect(@cb).toHaveBeenCalledWith(
-            '401: Unable to connect to JIRA during findIssueStatus.')
+            '401: Unable to connect to JIRA during findIssueStatus.', null)
 
         # Successful Request
         @jira.request.mostRecentCall.args[1] null,
@@ -103,12 +103,12 @@ describe "Node Jira Tests", ->
 
         # Invalid Version
         @jira.request.mostRecentCall.args[1] null, statusCode:404, null
-        expect(@cb).toHaveBeenCalledWith 'Invalid version.'
+        expect(@cb).toHaveBeenCalledWith 'Invalid version.', null
 
         # Unable to connect
         @jira.request.mostRecentCall.args[1] null, statusCode:401, null
         expect(@cb).toHaveBeenCalledWith(
-            '401: Unable to connect to JIRA during findIssueStatus.')
+            '401: Unable to connect to JIRA during findIssueStatus.', null)
         
         # Successful Request
         @jira.request.mostRecentCall.args[1] null,
@@ -130,7 +130,7 @@ describe "Node Jira Tests", ->
 
         # Invalid Version
         @jira.request.mostRecentCall.args[1] null, statusCode:404, null
-        expect(@cb).toHaveBeenCalledWith 'Invalid project.'
+        expect(@cb).toHaveBeenCalledWith 'Invalid project.', null
 
         # Successful Request
         @jira.request.mostRecentCall.args[1] null,
@@ -153,11 +153,11 @@ describe "Node Jira Tests", ->
 
         # Invalid URL 
         @jira.request.mostRecentCall.args[1] null, statusCode:404, null
-        expect(@cb).toHaveBeenCalledWith 'Invalid URL'
+        expect(@cb).toHaveBeenCalledWith 'Invalid URL', null
 
         @jira.request.mostRecentCall.args[1] null, statusCode:401, null
         expect(@cb).toHaveBeenCalledWith(
-            '401: Unable to connect to JIRA during rapidView search.')
+            '401: Unable to connect to JIRA during rapidView search.', null)
 
         # Successful Request
         @jira.request.mostRecentCall.args[1] null,
@@ -182,11 +182,11 @@ describe "Node Jira Tests", ->
 
         # Invalid URL 
         @jira.request.mostRecentCall.args[1] null, statusCode:404, null
-        expect(@cb).toHaveBeenCalledWith 'Invalid URL'
+        expect(@cb).toHaveBeenCalledWith 'Invalid URL', null
 
         @jira.request.mostRecentCall.args[1] null, statusCode:401, null
         expect(@cb).toHaveBeenCalledWith(
-            '401: Unable to connect to JIRA during sprints search.')
+            '401: Unable to connect to JIRA during sprints search.', null)
 
         # Successful Request
         @jira.request.mostRecentCall.args[1] null,
@@ -214,11 +214,11 @@ describe "Node Jira Tests", ->
 
         # Invalid URL 
         @jira.request.mostRecentCall.args[1] null, statusCode:404, null
-        expect(@cb).toHaveBeenCalledWith 'Invalid URL'
+        expect(@cb).toHaveBeenCalledWith 'Invalid URL', null
 
         @jira.request.mostRecentCall.args[1] null, statusCode:401, null
         expect(@cb).toHaveBeenCalledWith(
-            '401: Unable to connect to JIRA to add to sprint.')
+            '401: Unable to connect to JIRA to add to sprint.', null)
 
     it "Creates a Link Between two Issues", ->
         options =
@@ -237,15 +237,15 @@ describe "Node Jira Tests", ->
 
         # Invalid Project
         @jira.request.mostRecentCall.args[1] null, statusCode:404, null
-        expect(@cb).toHaveBeenCalledWith 'Invalid project.'
+        expect(@cb).toHaveBeenCalledWith 'Invalid project.', null
 
         @jira.request.mostRecentCall.args[1] null, statusCode:401, null
         expect(@cb).toHaveBeenCalledWith(
-            '401: Unable to connect to JIRA during issueLink.')
+            '401: Unable to connect to JIRA during issueLink.', null)
 
         # Successful Request
         @jira.request.mostRecentCall.args[1] null, statusCode:200
-        expect(@cb).toHaveBeenCalledWith null
+        expect(@cb).toHaveBeenCalledWith null, undefined
 
     it "Gets versions for a project", ->
         options =
@@ -261,11 +261,11 @@ describe "Node Jira Tests", ->
 
         # Invalid Project
         @jira.request.mostRecentCall.args[1] null, statusCode:404, null
-        expect(@cb).toHaveBeenCalledWith 'Invalid project.'
+        expect(@cb).toHaveBeenCalledWith 'Invalid project.', null
 
         @jira.request.mostRecentCall.args[1] null, statusCode:401, null
         expect(@cb).toHaveBeenCalledWith(
-            '401: Unable to connect to JIRA during getVersions.')
+            '401: Unable to connect to JIRA during getVersions.', null)
 
         # Successful Request
         @jira.request.mostRecentCall.args[1] null,
@@ -290,16 +290,16 @@ describe "Node Jira Tests", ->
         # Invalid Project
         @jira.request.mostRecentCall.args[1] null, statusCode:404, null
         expect(@cb).toHaveBeenCalledWith 'Version does not exist or the
- currently authenticated user does not have permission to view it'
+ currently authenticated user does not have permission to view it', null
 
         @jira.request.mostRecentCall.args[1] null, statusCode:403, null
         expect(@cb).toHaveBeenCalledWith(
             'The currently authenticated user does not have
- permission to edit the version')
+ permission to edit the version', null)
 
         @jira.request.mostRecentCall.args[1] null, statusCode:401, null
         expect(@cb).toHaveBeenCalledWith(
-            '401: Unable to connect to JIRA during createVersion.')
+            '401: Unable to connect to JIRA during createVersion.', null)
 
         # Successful Request
         @jira.request.mostRecentCall.args[1] null,
@@ -328,11 +328,11 @@ describe "Node Jira Tests", ->
 
         # Invalid Project
         @jira.request.mostRecentCall.args[1] null, statusCode:400, null
-        expect(@cb).toHaveBeenCalledWith 'Problem with the JQL query'
+        expect(@cb).toHaveBeenCalledWith 'Problem with the JQL query', null
 
         @jira.request.mostRecentCall.args[1] null, statusCode:401, null
         expect(@cb).toHaveBeenCalledWith(
-            '401: Unable to connect to JIRA during search.')
+            '401: Unable to connect to JIRA during search.', null)
 
         # Successful Request
         @jira.request.mostRecentCall.args[1] null,
@@ -382,7 +382,7 @@ describe "Node Jira Tests", ->
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
 
         @jira.request.mostRecentCall.args[1] null, statusCode:404, null
-        expect(@cb).toHaveBeenCalledWith 'Invalid URL'
+        expect(@cb).toHaveBeenCalledWith 'Invalid URL', null
 
      it "Gets ALL a specified User's Issues", ->
         spyOn @jira, 'searchJira'
@@ -407,7 +407,7 @@ describe "Node Jira Tests", ->
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
 
         @jira.request.mostRecentCall.args[1] null, statusCode:401, null
-        expect(@cb).toHaveBeenCalledWith '401: Error while deleting'
+        expect(@cb).toHaveBeenCalledWith '401: Error while deleting', null
 
         # Successful Request
         @jira.request.mostRecentCall.args[1] null, statusCode:204
@@ -429,7 +429,7 @@ describe "Node Jira Tests", ->
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
 
         @jira.request.mostRecentCall.args[1] null, statusCode:401
-        expect(@cb).toHaveBeenCalledWith '401: Error while updating'
+        expect(@cb).toHaveBeenCalledWith '401: Error while updating', undefined
 
         # Successful Request
         @jira.request.mostRecentCall.args[1] null, statusCode:200
@@ -449,10 +449,10 @@ describe "Node Jira Tests", ->
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
 
         @jira.request.mostRecentCall.args[1] null, statusCode:404, null
-        expect(@cb).toHaveBeenCalledWith 'Issue not found'
+        expect(@cb).toHaveBeenCalledWith 'Issue not found', null
 
         @jira.request.mostRecentCall.args[1] null, statusCode:401
-        expect(@cb).toHaveBeenCalledWith '401: Error while updating'
+        expect(@cb).toHaveBeenCalledWith '401: Error while updating', undefined
 
         # Successful Request
         @jira.request.mostRecentCall.args[1] null, statusCode:200,
@@ -475,7 +475,7 @@ describe "Node Jira Tests", ->
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
 
         @jira.request.mostRecentCall.args[1] null, statusCode:401
-        expect(@cb).toHaveBeenCalledWith '401: Error while updating'
+        expect(@cb).toHaveBeenCalledWith '401: Error while updating', undefined
 
         # Successful Request
         @jira.request.mostRecentCall.args[1] null, statusCode:204
@@ -495,10 +495,10 @@ describe "Node Jira Tests", ->
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
 
         @jira.request.mostRecentCall.args[1] null, statusCode:401
-        expect(@cb).toHaveBeenCalledWith '401: Error while updating'
+        expect(@cb).toHaveBeenCalledWith '401: Error while updating', undefined
 
         @jira.request.mostRecentCall.args[1] null, statusCode:500
-        expect(@cb).toHaveBeenCalledWith '500: Error while retrieving list.'
+        expect(@cb).toHaveBeenCalledWith '500: Error while retrieving list.', undefined
 
         # Successful Request
         @jira.request.mostRecentCall.args[1] null, statusCode:200, "body"
@@ -523,7 +523,7 @@ describe "Node Jira Tests", ->
 
         @jira.request.mostRecentCall.args[1] null, statusCode:400,
             '{"body:"none"}'
-        expect(@cb).toHaveBeenCalledWith 'Invalid Fields: "{\\"body:\\"none\\"}"'
+        expect(@cb).toHaveBeenCalledWith 'Invalid Fields: "{\\"body:\\"none\\"}"', jasmine.any(String)
 
         # Successful Request
         @jira.request.mostRecentCall.args[1] null, statusCode:201
@@ -549,10 +549,10 @@ describe "Node Jira Tests", ->
         expect(@cb).toHaveBeenCalledWith 'Invalid Fields: "{\\"body:\\"none\\"}"'
 
         @jira.request.mostRecentCall.args[1] null, statusCode:403
-        expect(@cb).toHaveBeenCalledWith 'Insufficient Permissions'
+        expect(@cb).toHaveBeenCalledWith 'Insufficient Permissions', undefined
 
         @jira.request.mostRecentCall.args[1] null, statusCode:401
-        expect(@cb).toHaveBeenCalledWith '401: Error while updating'
+        expect(@cb).toHaveBeenCalledWith '401: Error while updating', undefined
 
         # Successful Request
         @jira.request.mostRecentCall.args[1] null, statusCode:201
@@ -578,10 +578,10 @@ describe "Node Jira Tests", ->
         expect(@cb).toHaveBeenCalledWith 'Invalid Fields: "{\\"body:\\"none\\"}"'
 
         @jira.request.mostRecentCall.args[1] null, statusCode:403
-        expect(@cb).toHaveBeenCalledWith 'Insufficient Permissions'
+        expect(@cb).toHaveBeenCalledWith 'Insufficient Permissions', undefined
 
         @jira.request.mostRecentCall.args[1] null, statusCode:401
-        expect(@cb).toHaveBeenCalledWith '401: Error while updating'
+        expect(@cb).toHaveBeenCalledWith '401: Error while updating', undefined
 
         # Successful Request
         @jira.request.mostRecentCall.args[1] null, statusCode:201
@@ -601,7 +601,7 @@ describe "Node Jira Tests", ->
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
 
         @jira.request.mostRecentCall.args[1] null, statusCode:401
-        expect(@cb).toHaveBeenCalledWith '401: Error while retrieving issue types'
+        expect(@cb).toHaveBeenCalledWith '401: Error while retrieving issue types', undefined
 
         # Successful Request
         @jira.request.mostRecentCall.args[1] null, statusCode:200, "body"
@@ -621,7 +621,7 @@ describe "Node Jira Tests", ->
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
 
         @jira.request.mostRecentCall.args[1] null, statusCode:500
-        expect(@cb).toHaveBeenCalledWith '500: Error while retrieving backlog'
+        expect(@cb).toHaveBeenCalledWith '500: Error while retrieving backlog', undefined
 
         # Successful Request
         @jira.request.mostRecentCall.args[1] null, statusCode:200, body: issues: ['test']
