@@ -36,7 +36,7 @@ Find the status of an issue.
         console.log('Status: ' + issue.fields.status.name);
     });
 
-Currently there is no explicit login call necessary as each API call uses Basic Authentication to authenticate. 
+Currently there is no explicit login call necessary as each API call uses Basic Authentication to authenticate.
 
 ## Options ##
 
@@ -61,6 +61,7 @@ JiraApi options:
   *  List Components
   *  List Fields
   *  List Priorities
+  *  Pulling all issues in project
 *  Versions
   *  Pulling versions
   *  Adding a new version
