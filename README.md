@@ -5,7 +5,7 @@
 A node.js module, which provides an object oriented wrapper for the JIRA REST API.
 
 This library is built to support version `2.0.alpha1` of the JIRA REST API.
-This library is also tested with version `2` of the JIRA REST API
+This library is also tested with version `2` of the JIRA REST API.
   It has been noted that with Jira OnDemand, `2.0.alpha1` does not work, devs
   should revert to `2`. If this changes, please notify us.
 
@@ -21,7 +21,7 @@ or
 
   Install via git clone:
 
-    $ git clone git://git://github.com/steves/node-jira.git
+    $ git clone git://github.com/steves/node-jira.git
     $ cd node-jira
     $ npm install
 
@@ -54,6 +54,8 @@ JiraApi options:
 ## Implemented APIs ##
 
 *  Authentication
+   *  HTTP
+   *  OAuth
 *  Projects
   *  Pulling a project
   *  List all projects viewable to the user
@@ -81,6 +83,7 @@ JiraApi options:
     *  Set Max Results
     *  Set Start-At parameter for results
   *  Add a worklog
+  *  Add new estimate for worklog
   *  Add a comment
 *  Transitions
   *  List
@@ -96,6 +99,8 @@ JiraApi options:
 
 
 
+*  _0.9.0 Add OAuth Support and New Estimates on addWorklog (thanks to
+   [nagyv](https://github.com/nagyv))_
 *  _0.8.2 Fix URL Format Issues (thanks to
         [eduardolundgren](https://github.com/eduardolundgren))_
 *  _0.8.1 Expanding the transitions options (thanks to
