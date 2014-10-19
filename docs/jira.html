@@ -102,7 +102,9 @@ jira.findIssue(issueNumber, <span class="hljs-function"><span class="hljs-keywor
 </ul>
 </li>
 <li>Rapid Views<ul>
+<li>Get all Rapid Views</li>
 <li>Find based on project name</li>
+<li>Get the configuration for a Rapid View</li>
 <li>Get the latest Green Hopper sprint</li>
 <li>Gets attached issues</li>
 </ul>
@@ -142,20 +144,14 @@ jira.findIssue(issueNumber, <span class="hljs-function"><span class="hljs-keywor
 </ul>
 <h2 id="changelog">Changelog</h2>
 <ul>
-<li><em>0.9.0 Add OAuth Support and New Estimates on addWorklog (thanks to
-<a href="https://github.com/nagyv">nagyv</a>)</em></li>
-<li>_0.8.2 Fix URL Format Issues (thanks to<pre><code> [eduardolundgren](https:<span class="hljs-comment">//github.com/eduardolundgren))_</span>
-</code></pre></li>
-<li>_0.8.1 Expanding the transitions options (thanks to<pre><code> [eduardolundgren](https:<span class="hljs-comment">//github.com/eduardolundgren))_</span>
-</code></pre></li>
-<li>_0.8.0 Ability to search users (thanks to<pre><code> [eduardolundgren](https:<span class="hljs-comment">//github.com/eduardolundgren))_</span>
-</code></pre></li>
-<li>_0.7.2 Allows HTTP Code 204 on issue update edit (thanks to<pre><code> [eduardolundgren](https:<span class="hljs-comment">//github.com/eduardolundgren))_</span>
-</code></pre></li>
-<li>_0.7.1 Check if body variable is undef (thanks to<pre><code> [AlexCline](https:<span class="hljs-comment">//github.com/AlexCline))_</span>
-</code></pre></li>
-<li>_0.7.0 Adds list priorities, list fields, and project components (thanks to<pre><code> [eduardolundgren](https:<span class="hljs-comment">//github.com/eduardolundgren))_</span>
-</code></pre></li>
+<li><em>0.10.0 Additional methods for Rapid Views (thanks to <a href="http://github.com/adamgruber">adamgruber</a>)</em></li>
+<li><em>0.9.0 Add OAuth Support and New Estimates on addWorklog (thanks to <a href="https://github.com/nagyv">nagyv</a>)</em></li>
+<li><em>0.8.2 Fix URL Format Issues (thanks to <a href="https://github.com/eduardolundgren">eduardolundgren</a>)</em></li>
+<li><em>0.8.1 Expanding the transitions options (thanks to <a href="https://github.com/eduardolundgren">eduardolundgren</a>)</em></li>
+<li><em>0.8.0 Ability to search users (thanks to <a href="https://github.com/eduardolundgren">eduardolundgren</a>)</em></li>
+<li><em>0.7.2 Allows HTTP Code 204 on issue update edit (thanks to <a href="https://github.com/eduardolundgren">eduardolundgren</a>)</em></li>
+<li><em>0.7.1 Check if body variable is undef (thanks to <a href="https://github.com/AlexCline">AlexCline</a>)</em></li>
+<li><em>0.7.0 Adds list priorities, list fields, and project components (thanks to <a href="https://github.com/eduardolundgren">eduardolundgren</a>)</em></li>
 <li><em>0.6.0 Comment API implemented (thanks to <a href="https://github.com/StevenMcD">StevenMcD</a>)</em></li>
 <li><em>0.5.0 Last param is now for strict SSL checking, defaults to true</em></li>
 <li><em>0.4.1 Now handing errors in the request callback (thanks <a href="https://github.com/mrbrookman">mrbrookman</a>)</em></li>
@@ -428,6 +424,54 @@ later, easier</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
+              <h2 id="list-all-rapid-views">List all Rapid Views</h2>
+<h3 id="takes">Takes</h3>
+<ul>
+<li>callback: for when it’s done</li>
+</ul>
+<h3 id="returns">Returns</h3>
+<ul>
+<li>error: string of the error</li>
+<li>array of rapidViews</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">this</span>.getAllRapidViews = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/rapidview'</span>, <span class="hljs-string">'rest/greenhopper/'</span>, <span class="hljs-string">'1.0'</span>),
+      method: <span class="hljs-string">'GET'</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">'Invalid URL'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during rapidView search.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.body !== <span class="hljs-literal">null</span>) {
+        callback(<span class="hljs-literal">null</span>, response.body.views);
+      }
+    });
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
               <h2 id="find-the-rapid-view-for-a-specified-project">Find the Rapid View for a specified project</h2>
 <h3 id="takes">Takes</h3>
 <ul>
@@ -485,11 +529,66 @@ later, easier</p>
         </li>
         
         
-        <li id="section-9">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <h2 id="get-the-configuration-for-a-specified-rapid-view">Get the Configuration for a specified Rapid View</h2>
+<h3 id="takes">Takes</h3>
+<ul>
+<li>rapidViewId: id of the rapid view</li>
+<li>callback: for when it’s done</li>
+</ul>
+<h3 id="returns">Returns</h3>
+<ul>
+<li>error: string of the error</li>
+<li>config: rapid view configuration object</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
+   * Finds the Rapid View that belongs to a specified project.
+   *
+   * @param projectName
+   * @param callback
+   */</span>
+  <span class="hljs-keyword">this</span>.getRapidViewConfig = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rapidViewId, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/rapidviewconfig/editmodel?rapidViewId='</span> + rapidViewId, <span class="hljs-string">'rest/greenhopper/'</span>, <span class="hljs-string">'1.0'</span>),
+      method: <span class="hljs-string">'GET'</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">'Invalid URL'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during rapidView search.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.body) {
+        callback(<span class="hljs-literal">null</span>, response.body);
+      }
+    });
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <h2 id="get-a-list-of-sprints-belonging-to-a-rapid-view">Get a list of Sprints belonging to a Rapid View</h2>
 <h3 id="takes">Takes</h3>
@@ -542,11 +641,11 @@ later, easier</p>
         </li>
         
         
-        <li id="section-10">
+        <li id="section-12">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
               <h2 id="get-the-issues-for-a-rapidview-sprint">Get the issues for a rapidView / sprint</h2>
 <h3 id="takes">Takes</h3>
@@ -601,11 +700,11 @@ later, easier</p>
         </li>
         
         
-        <li id="section-11">
+        <li id="section-13">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <h2 id="add-an-issue-to-the-project-s-current-sprint">Add an issue to the project’s current sprint</h2>
 <h3 id="takes">Takes</h3>
@@ -660,11 +759,11 @@ later, easier</p>
         </li>
         
         
-        <li id="section-12">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <h2 id="create-an-issue-link-between-two-issues">Create an issue link between two issues</h2>
 <h3 id="takes">Takes</h3>
@@ -791,11 +890,11 @@ later, easier</p>
         </li>
         
         
-        <li id="section-13">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <h2 id="get-versions-for-a-project">Get Versions for a project</h2>
 <h3 id="takes">Takes</h3>
@@ -839,11 +938,11 @@ later, easier</p>
         </li>
         
         
-        <li id="section-14">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <h2 id="create-a-version">Create a version</h2>
 <h3 id="takes">Takes</h3>
@@ -903,11 +1002,11 @@ later, easier</p>
         </li>
         
         
-        <li id="section-15">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <h2 id="update-a-version">Update a version</h2>
 <h3 id="takes">Takes</h3>
@@ -968,11 +1067,11 @@ later, easier</p>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <h2 id="pass-a-search-query-to-jira">Pass a search query to Jira</h2>
 <h3 id="takes">Takes</h3>
@@ -1006,11 +1105,11 @@ later, easier</p>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>backwards compatibility</p>
 
@@ -1055,11 +1154,11 @@ later, easier</p>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <h2 id="search-user-on-jira">Search user on Jira</h2>
 <h3 id="takes">Takes</h3>
@@ -1112,11 +1211,11 @@ includeInactive: If true, then inactive users are included in the results (defau
         </li>
         
         
-        <li id="section-19">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <h2 id="get-issues-related-to-a-user">Get issues related to a user</h2>
 <h3 id="takes">Takes</h3>
@@ -1149,11 +1248,11 @@ includeInactive: If true, then inactive users are included in the results (defau
         </li>
         
         
-        <li id="section-20">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <h2 id="add-issue-to-jira">Add issue to Jira</h2>
 <h3 id="takes">Takes</h3>
@@ -1199,11 +1298,11 @@ includeInactive: If true, then inactive users are included in the results (defau
         </li>
         
         
-        <li id="section-21">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <h2 id="delete-issue-to-jira">Delete issue to Jira</h2>
 <h3 id="takes">Takes</h3>
@@ -1244,11 +1343,11 @@ includeInactive: If true, then inactive users are included in the results (defau
         </li>
         
         
-        <li id="section-22">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <h2 id="update-issue-in-jira">Update issue in Jira</h2>
 <h3 id="takes">Takes</h3>
@@ -1291,11 +1390,11 @@ includeInactive: If true, then inactive users are included in the results (defau
         </li>
         
         
-        <li id="section-23">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <h2 id="list-components">List Components</h2>
 <h3 id="takes">Takes</h3>
@@ -1362,11 +1461,11 @@ includeInactive: If true, then inactive users are included in the results (defau
         </li>
         
         
-        <li id="section-24">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <h2 id="list-listfields">List listFields</h2>
 <h3 id="takes">Takes</h3>
@@ -1423,11 +1522,11 @@ includeInactive: If true, then inactive users are included in the results (defau
         </li>
         
         
-        <li id="section-25">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <h2 id="list-listpriorities">List listPriorities</h2>
 <h3 id="takes">Takes</h3>
@@ -1479,11 +1578,11 @@ includeInactive: If true, then inactive users are included in the results (defau
         </li>
         
         
-        <li id="section-26">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <h2 id="list-transitions">List Transitions</h2>
 <h3 id="takes">Takes</h3>
@@ -1564,11 +1663,11 @@ includeInactive: If true, then inactive users are included in the results (defau
         </li>
         
         
-        <li id="section-27">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <h2 id="transition-issue-in-jira">Transition issue in Jira</h2>
 <h3 id="takes">Takes</h3>
@@ -1611,11 +1710,11 @@ includeInactive: If true, then inactive users are included in the results (defau
         </li>
         
         
-        <li id="section-28">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <h2 id="list-all-viewable-projects">List all Viewable Projects</h2>
 <h3 id="takes">Takes</h3>
@@ -1671,11 +1770,11 @@ includeInactive: If true, then inactive users are included in the results (defau
         </li>
         
         
-        <li id="section-29">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <h2 id="add-a-comment-to-an-issue">Add a comment to an issue</h2>
 <h3 id="takes">Takes</h3>
@@ -1724,11 +1823,11 @@ includeInactive: If true, then inactive users are included in the results (defau
         </li>
         
         
-        <li id="section-30">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <h2 id="add-a-worklog-to-a-project">Add a worklog to a project</h2>
 <h3 id="takes">Takes</h3>
@@ -1810,11 +1909,11 @@ includeInactive: If true, then inactive users are included in the results (defau
         </li>
         
         
-        <li id="section-31">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <h2 id="list-all-issue-types">List all Issue Types</h2>
 <h3 id="takes">Takes</h3>
@@ -1864,11 +1963,11 @@ includeInactive: If true, then inactive users are included in the results (defau
         </li>
         
         
-        <li id="section-32">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <h2 id="register-a-webhook">Register a webhook</h2>
 <h3 id="takes">Takes</h3>
@@ -1924,11 +2023,11 @@ includeInactive: If true, then inactive users are included in the results (defau
         </li>
         
         
-        <li id="section-33">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <h2 id="list-all-registered-webhooks">List all registered webhooks</h2>
 <h3 id="takes">Takes</h3>
@@ -1982,11 +2081,11 @@ includeInactive: If true, then inactive users are included in the results (defau
         </li>
         
         
-        <li id="section-34">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <h2 id="get-a-webhook-by-its-id">Get a webhook by its ID</h2>
 <h3 id="takes">Takes</h3>
@@ -2026,11 +2125,11 @@ includeInactive: If true, then inactive users are included in the results (defau
         </li>
         
         
-        <li id="section-35">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <h2 id="delete-a-registered-webhook">Delete a registered webhook</h2>
 <h3 id="takes">Takes</h3>
@@ -2070,11 +2169,11 @@ includeInactive: If true, then inactive users are included in the results (defau
         </li>
         
         
-        <li id="section-36">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <h2 id="describe-the-currently-authenticated-user">Describe the currently authenticated user</h2>
 <h3 id="takes">Takes</h3>
@@ -2127,11 +2226,11 @@ includeInactive: If true, then inactive users are included in the results (defau
         </li>
         
         
-        <li id="section-37">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-37">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <h2 id="retrieve-the-backlog-of-a-certain-rapid-view">Retrieve the backlog of a certain Rapid View</h2>
 <h3 id="takes">Takes</h3>
@@ -2224,7 +2323,7 @@ includeInactive: If true, then inactive users are included in the results (defau
       callback(response.statusCode + <span class="hljs-string">': Error while retrieving backlog'</span>);
     });
   };
-}(JiraApi.prototype));</pre></div></div>
+}).call(JiraApi.prototype);</pre></div></div>
             
         </li>
         

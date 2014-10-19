@@ -9,7 +9,7 @@ module.exports = function (grunt) {
         forceExit: false,
         extensions: 'coffee',
         jUnit: {
-          report: false,
+          report: true,
           savePath : "./build/reports/jasmine/",
           useDotNotation: true,
           consolidate: true
@@ -27,7 +27,7 @@ module.exports = function (grunt) {
     },
     jslint: {
       client: {
-        src: ['./Gruntfile.js', 'lib/**/*.js'],
+        src: ['./Gruntfile.js', 'lib/**/jira.js'],
         directives: {
           indent: 2,
           curly: true,
