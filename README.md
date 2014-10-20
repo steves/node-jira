@@ -5,7 +5,7 @@
 A node.js module, which provides an object oriented wrapper for the JIRA REST API.
 
 This library is built to support version `2.0.alpha1` of the JIRA REST API.
-This library is also tested with version `2` of the JIRA REST API.
+This library is also tested with version `2` of the JIRA REST API
   It has been noted that with Jira OnDemand, `2.0.alpha1` does not work, devs
   should revert to `2`. If this changes, please notify us.
 
@@ -25,53 +25,18 @@ or
     $ cd node-jira
     $ npm install
 
-## Examples ##
+## Example ##
 
-### Create the JIRA client ###
+Find the status of an issue.
 
     JiraApi = require('jira').JiraApi;
-    
+
     var jira = new JiraApi('https', config.host, config.port, config.user, config.password, '2.0.alpha1');
-
-### Find the status of an issue ###
-
     jira.findIssue(issueNumber, function(error, issue) {
         console.log('Status: ' + issue.fields.status.name);
     });
 
-
-Currently there is no explicit login call necessary as each API call uses Basic Authentication to authenticate. 
-
-### Get an issue remote links ###
-
-Returns an array of remote links data.
-
-    jira.getRemoteLinks(issueKey, function(err, links) {
-        if (!err) {
-            console.log(issueKey + ' has ' + links.length + ' web links');
-        }
-    });
-
-### Create a remote link on an issue ###
-
-Returns an array of remote links data.
-    
-    // create a web link to a GitHub issue
-    var linkData = {
-        "object": {
-            "url" : "https://github.com/steves/node-jira/issues/1",
-            "title": "Add getVersions and createVersion functions",
-            "icon" : {
-                "url16x16": "https://github.com/favicon.ico"
-            }
-        }
-    };
-    
-    jira.createRemoteLink(issueKey, linkData, function (err, link) {
-        
-    });
-
-More information can be found by checking [JIRA Developer documentation](https://developer.atlassian.com/display/JIRADEV/JIRA+REST+API+for+Remote+Issue+Links#JIRARESTAPIforRemoteIssueLinks-CreatingLinks).
+Currently there is no explicit login call necessary as each API call uses Basic Authentication to authenticate.
 
 ## Options ##
 
@@ -84,12 +49,13 @@ JiraApi options:
 *  `Jira API Version<string>`: Known to work with `2` and `2.0.alpha1`
 *  `verbose<bool>`: Log some info to the console, usually for debugging
 *  `strictSSL<bool>`: Set to false if you have self-signed certs or something non-trustworthy
+* `oauth`: A dictionary of `consumer_key`, `consumer_secret`, `access_token` and `access_token_secret` to be used for OAuth authentication.
 
 ## Implemented APIs ##
 
 *  Authentication
-   *  HTTP
-   *  OAuth
+  *  HTTP
+  *  OAuth
 *  Projects
   *  Pulling a project
   *  List all projects viewable to the user
@@ -101,7 +67,11 @@ JiraApi options:
   *  Adding a new version
   *  Pulling unresolved issues count for a specific version
 *  Rapid Views
+  *  Get all Rapid Views
   *  Find based on project name
+  *  Get the configuration for a Rapid View
+  *  Get all data for a Rapid View
+  *  Get all active Green Hopper sprints
   *  Get the latest Green Hopper sprint
   *  Gets attached issues
 *  Issues
@@ -119,49 +89,32 @@ JiraApi options:
   *  Add a worklog
   *  Add new estimate for worklog
   *  Add a comment
-  *  Remote links (aka Web Links)
-    * Create a remote link on an issue
-    * Get all remote links of an issue
 *  Transitions
   *  List
 *  Users
   *  Search
 
-## TODO ##
-
+## TO-DO ##
 *  Refactor currently implemented APIs to be more Object Oriented
 *  Refactor to make use of built-in node.js events and classes
 
 ## Changelog ##
-
-
-* _0.9.2 Smaller fixes and features added_
-  * proper doRequest usage (thanks to [ndamnjanovic](https://github.com/ndamnjanovic))
-  * Support for @ in usernames (thanks to [ryanplasma](https://github.com/ryanplasma))
-  * Handling empty responses in getIssue
+*  _0.10.0 Additional methods for Rapid Views (thanks to [adamgruber](http://github.com/adamgruber))_
 *  _0.9.0 Add OAuth Support and New Estimates on addWorklog (thanks to [nagyv](https://github.com/nagyv))_
-*  _0.8.2 Fix URL Format Issues (thanks to
-        [eduardolundgren](https://github.com/eduardolundgren))_
-*  _0.8.1 Expanding the transitions options (thanks to
-        [eduardolundgren](https://github.com/eduardolundgren))_
-*  _0.8.0 Ability to search users (thanks to
-        [eduardolundgren](https://github.com/eduardolundgren))_
-*  _0.7.2 Allows HTTP Code 204 on issue update edit (thanks to
-        [eduardolundgren](https://github.com/eduardolundgren))_
-*  _0.7.1 Check if body variable is undef (thanks to
-        [AlexCline](https://github.com/AlexCline))_
-*  _0.7.0 Adds list priorities, list fields, and project components (thanks to
-        [eduardolundgren](https://github.com/eduardolundgren))_
+*  _0.8.2 Fix URL Format Issues (thanks to [eduardolundgren](https://github.com/eduardolundgren))_
+*  _0.8.1 Expanding the transitions options (thanks to [eduardolundgren](https://github.com/eduardolundgren))_
+*  _0.8.0 Ability to search users (thanks to [eduardolundgren](https://github.com/eduardolundgren))_
+*  _0.7.2 Allows HTTP Code 204 on issue update edit (thanks to [eduardolundgren](https://github.com/eduardolundgren))_
+*  _0.7.1 Check if body variable is undef (thanks to [AlexCline](https://github.com/AlexCline))_
+*  _0.7.0 Adds list priorities, list fields, and project components (thanks to [eduardolundgren](https://github.com/eduardolundgren))_
 *  _0.6.0 Comment API implemented (thanks to [StevenMcD](https://github.com/StevenMcD))_
 *  _0.5.0 Last param is now for strict SSL checking, defaults to true_
 *  _0.4.1 Now handing errors in the request callback (thanks [mrbrookman](https://github.com/mrbrookman))_
 *  _0.4.0 Now auto-redirecting between http and https (for both GET and POST)_
 *  _0.3.1 [Request](https://github.com/mikeal/request) is broken, setting max request package at 2.15.0_
 *  _0.3.0 Now Gets Issues for a Rapidview/Sprint (thanks [donbonifacio](https://github.com/donbonifacio))_
-*  _0.2.0 Now allowing startAt and MaxResults to be passed to searchJira,
-   switching to semantic versioning._
-*  _0.1.0 Using Basic Auth instead of cookies, all calls unit tested, URI
-   creation refactored_
+*  _0.2.0 Now allowing startAt and MaxResults to be passed to searchJira, switching to semantic versioning._
+*  _0.1.0 Using Basic Auth instead of cookies, all calls unit tested, URI creation refactored_
 *  _0.0.6 Now linting, preparing to refactor_
 *  _0.0.5 JQL search now takes a list of fields_
 *  _0.0.4 Added jql search_
