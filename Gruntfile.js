@@ -42,6 +42,7 @@ module.exports = function (grunt) {
           unused: true,
           boss: true,
           browser: true,
+          plusplus: true,
           predef: ['module', 'require', 'console', 'exports']
         }
       }

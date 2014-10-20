@@ -42,8 +42,8 @@ $ npm install
 <pre><code>JiraApi = <span class="hljs-built_in">require</span>(<span class="hljs-string">'jira'</span>).JiraApi;
 
 <span class="hljs-keyword">var</span> jira = <span class="hljs-keyword">new</span> JiraApi(<span class="hljs-string">'https'</span>, config.host, config.port, config.user, config.password, <span class="hljs-string">'2.0.alpha1'</span>);
-jira.findIssue(issueNumber, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, issue)</span> {</span>
-    console.log(<span class="hljs-string">'Status: '</span> + issue.fields.status.name);
+jira.findIssue(issueNumber, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, issue)</span> </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Status: '</span> + issue.fields.status.name);
 });
 </code></pre><p>Currently there is no explicit login call necessary as each API call uses Basic Authentication to authenticate.</p>
 <h2 id="options">Options</h2>
@@ -57,7 +57,7 @@ jira.findIssue(issueNumber, <span class="hljs-function"><span class="hljs-keywor
 <li><code>Jira API Version&lt;string&gt;</code>: Known to work with <code>2</code> and <code>2.0.alpha1</code></li>
 <li><code>verbose&lt;bool&gt;</code>: Log some info to the console, usually for debugging</li>
 <li><code>strictSSL&lt;bool&gt;</code>: Set to false if you have self-signed certs or something non-trustworthy</li>
-<li><code>oauth</code>: A disctionary of <code>consumer_key</code>, <code>consumer_secret</code>, <code>access_token</code> and <code>access_token_secret</code> to be used for OAuth authentication.</li>
+<li><code>oauth</code>: A dictionary of <code>consumer_key</code>, <code>consumer_secret</code>, <code>access_token</code> and <code>access_token_secret</code> to be used for OAuth authentication.</li>
 </ul>
 <h2 id="implemented-apis">Implemented APIs</h2>
 <ul>
@@ -81,7 +81,11 @@ jira.findIssue(issueNumber, <span class="hljs-function"><span class="hljs-keywor
 </ul>
 </li>
 <li>Rapid Views<ul>
+<li>Get all Rapid Views</li>
 <li>Find based on project name</li>
+<li>Get the configuration for a Rapid View</li>
+<li>Get all data for a Rapid View</li>
+<li>Get all active Green Hopper sprints</li>
 <li>Get the latest Green Hopper sprint</li>
 <li>Gets attached issues</li>
 </ul>
@@ -114,27 +118,21 @@ jira.findIssue(issueNumber, <span class="hljs-function"><span class="hljs-keywor
 </ul>
 </li>
 </ul>
-<h2 id="todo">TODO</h2>
+<h2 id="to-do">TO-DO</h2>
 <ul>
 <li>Refactor currently implemented APIs to be more Object Oriented</li>
 <li>Refactor to make use of built-in node.js events and classes</li>
 </ul>
 <h2 id="changelog">Changelog</h2>
 <ul>
-<li><em>0.9.0 Add OAuth Support and New Estimates on addWorklog (thanks to
-<a href="https://github.com/nagyv">nagyv</a>)</em></li>
-<li>_0.8.2 Fix URL Format Issues (thanks to<pre><code> [eduardolundgren](https:<span class="hljs-comment">//github.com/eduardolundgren))_</span>
-</code></pre></li>
-<li>_0.8.1 Expanding the transitions options (thanks to<pre><code> [eduardolundgren](https:<span class="hljs-comment">//github.com/eduardolundgren))_</span>
-</code></pre></li>
-<li>_0.8.0 Ability to search users (thanks to<pre><code> [eduardolundgren](https:<span class="hljs-comment">//github.com/eduardolundgren))_</span>
-</code></pre></li>
-<li>_0.7.2 Allows HTTP Code 204 on issue update edit (thanks to<pre><code> [eduardolundgren](https:<span class="hljs-comment">//github.com/eduardolundgren))_</span>
-</code></pre></li>
-<li>_0.7.1 Check if body variable is undef (thanks to<pre><code> [AlexCline](https:<span class="hljs-comment">//github.com/AlexCline))_</span>
-</code></pre></li>
-<li>_0.7.0 Adds list priorities, list fields, and project components (thanks to<pre><code> [eduardolundgren](https:<span class="hljs-comment">//github.com/eduardolundgren))_</span>
-</code></pre></li>
+<li><em>0.10.0 Additional methods for Rapid Views (thanks to <a href="http://github.com/adamgruber">adamgruber</a>)</em></li>
+<li><em>0.9.0 Add OAuth Support and New Estimates on addWorklog (thanks to <a href="https://github.com/nagyv">nagyv</a>)</em></li>
+<li><em>0.8.2 Fix URL Format Issues (thanks to <a href="https://github.com/eduardolundgren">eduardolundgren</a>)</em></li>
+<li><em>0.8.1 Expanding the transitions options (thanks to <a href="https://github.com/eduardolundgren">eduardolundgren</a>)</em></li>
+<li><em>0.8.0 Ability to search users (thanks to <a href="https://github.com/eduardolundgren">eduardolundgren</a>)</em></li>
+<li><em>0.7.2 Allows HTTP Code 204 on issue update edit (thanks to <a href="https://github.com/eduardolundgren">eduardolundgren</a>)</em></li>
+<li><em>0.7.1 Check if body variable is undef (thanks to <a href="https://github.com/AlexCline">AlexCline</a>)</em></li>
+<li><em>0.7.0 Adds list priorities, list fields, and project components (thanks to <a href="https://github.com/eduardolundgren">eduardolundgren</a>)</em></li>
 <li><em>0.6.0 Comment API implemented (thanks to <a href="https://github.com/StevenMcD">StevenMcD</a>)</em></li>
 <li><em>0.5.0 Last param is now for strict SSL checking, defaults to true</em></li>
 <li><em>0.4.1 Now handing errors in the request callback (thanks <a href="https://github.com/mrbrookman">mrbrookman</a>)</em></li>
@@ -155,17 +153,17 @@ creation refactored</em></li>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> url = <span class="hljs-built_in">require</span>(<span class="hljs-string">'url'</span>),
-    logger = console,
-    OAuth = <span class="hljs-built_in">require</span>(<span class="hljs-string">"oauth"</span>);
-
-
-<span class="hljs-keyword">var</span> JiraApi = exports.JiraApi = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(protocol, host, port, username, password, apiVersion, verbose, strictSSL, oauth)</span> {</span>
-    <span class="hljs-keyword">this</span>.protocol = protocol;
-    <span class="hljs-keyword">this</span>.host = host;
-    <span class="hljs-keyword">this</span>.port = port;
-    <span class="hljs-keyword">this</span>.username = username;
-    <span class="hljs-keyword">this</span>.password = password;
-    <span class="hljs-keyword">this</span>.apiVersion = apiVersion;</pre></div></div>
+  logger = <span class="hljs-built_in">console</span>,
+  OAuth = <span class="hljs-built_in">require</span>(<span class="hljs-string">"oauth"</span>),
+  JiraApi;
+JiraApi = exports.JiraApi = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(protocol, host, port, username, password, apiVersion, verbose, strictSSL, oauth)</span> </span>{
+<span class="hljs-pi">  'use strict'</span>;
+  <span class="hljs-keyword">this</span>.protocol = protocol;
+  <span class="hljs-keyword">this</span>.host = host;
+  <span class="hljs-keyword">this</span>.port = port;
+  <span class="hljs-keyword">this</span>.username = username;
+  <span class="hljs-keyword">this</span>.password = password;
+  <span class="hljs-keyword">this</span>.apiVersion = apiVersion;</pre></div></div>
             
         </li>
         
@@ -181,10 +179,10 @@ modified</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (strictSSL == <span class="hljs-literal">null</span>) {
-        strictSSL = <span class="hljs-literal">true</span>;
-    }
-    <span class="hljs-keyword">this</span>.strictSSL = strictSSL;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">if</span> (strictSSL === <span class="hljs-literal">undefined</span>) {
+    strictSSL = <span class="hljs-literal">true</span>;
+  }
+  <span class="hljs-keyword">this</span>.strictSSL = strictSSL;</pre></div></div>
             
         </li>
         
@@ -199,8 +197,12 @@ modified</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.request = <span class="hljs-built_in">require</span>(<span class="hljs-string">'request'</span>);
-    <span class="hljs-keyword">if</span> (verbose !== <span class="hljs-literal">true</span>) { logger = { log: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>} }; }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">this</span>.request = <span class="hljs-built_in">require</span>(<span class="hljs-string">'request'</span>);
+  <span class="hljs-keyword">if</span> (verbose !== <span class="hljs-literal">true</span>) {
+    logger = {
+      log: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{<span class="hljs-keyword">return</span>; }
+    };
+  }</pre></div></div>
             
         </li>
         
@@ -216,46 +218,36 @@ later, easier</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.makeUri = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(pathname, altBase, altApiVersion)</span> {</span>
-        <span class="hljs-keyword">var</span> basePath = <span class="hljs-string">'rest/api/'</span>;
-        <span class="hljs-keyword">if</span> (altBase != <span class="hljs-literal">null</span>) {
-            basePath = altBase;
-        }
-
-        <span class="hljs-keyword">var</span> apiVersion = <span class="hljs-keyword">this</span>.apiVersion;
-        <span class="hljs-keyword">if</span> (altApiVersion != <span class="hljs-literal">null</span>) {
-          apiVersion = altApiVersion;
-        }
-
-        <span class="hljs-keyword">var</span> uri = url.format({
-            protocol: <span class="hljs-keyword">this</span>.protocol,
-            hostname: <span class="hljs-keyword">this</span>.host,
-            port: <span class="hljs-keyword">this</span>.port,
-            pathname: basePath + apiVersion + pathname
-        });
-        <span class="hljs-keyword">return</span> <span class="hljs-built_in">decodeURIComponent</span>(uri);
-    };
-
-    <span class="hljs-keyword">this</span>.doRequest = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options, callback)</span> {</span>
-        <span class="hljs-keyword">if</span>(oauth &amp;&amp; oauth.consumer_key &amp;&amp; oauth.consumer_secret) {
-          options.oauth = {
-            consumer_key: oauth.consumer_key,
-            consumer_secret: oauth.consumer_secret,
-            token: oauth.access_token,
-            token_secret: oauth.access_token_secret
-          };
-        } <span class="hljs-keyword">else</span> {
-          options.auth = {
-            <span class="hljs-string">'user'</span>: <span class="hljs-keyword">this</span>.username,
-            <span class="hljs-string">'pass'</span>: <span class="hljs-keyword">this</span>.password
-          };
-        }
-        <span class="hljs-keyword">this</span>.request(options, callback);
-    };
-
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">this</span>.makeUri = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(pathname, altBase, altApiVersion)</span> </span>{
+    <span class="hljs-keyword">var</span> basePath = altBase || <span class="hljs-string">'rest/api/'</span>,
+      apiVer = altApiVersion || <span class="hljs-keyword">this</span>.apiVersion,
+      uri = url.format({
+        protocol: <span class="hljs-keyword">this</span>.protocol,
+        hostname: <span class="hljs-keyword">this</span>.host,
+        port: <span class="hljs-keyword">this</span>.port,
+        pathname: basePath + apiVer + pathname
+      });
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">decodeURIComponent</span>(uri);
+  };
+  <span class="hljs-keyword">this</span>.doRequest = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options, callback)</span> </span>{
+    <span class="hljs-keyword">if</span> (oauth &amp;&amp; oauth.consumer_key &amp;&amp; oauth.consumer_secret) {
+      options.oauth = {
+        consumer_key: oauth.consumer_key,
+        consumer_secret: oauth.consumer_secret,
+        token: oauth.access_token,
+        token_secret: oauth.access_token_secret
+      };
+    } <span class="hljs-keyword">else</span> {
+      options.auth = {
+        <span class="hljs-string">'user'</span>: <span class="hljs-keyword">this</span>.username,
+        <span class="hljs-string">'pass'</span>: <span class="hljs-keyword">this</span>.password
+      };
+    }
+    <span class="hljs-keyword">this</span>.request(options, callback);
+  };
 };
-
-(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span></pre></div></div>
+(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> </span>{
+<span class="hljs-pi">  'use strict'</span>;</pre></div></div>
             
         </li>
         
@@ -281,39 +273,32 @@ later, easier</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.findIssue = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(issueNumber, callback)</span> {</span>
-
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issue/'</span> + issueNumber),
-            method: <span class="hljs-string">'GET'</span>
-        };
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response, body)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
-                callback(<span class="hljs-string">'Invalid issue number.'</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
-                callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during findIssueStatus.'</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (body === <span class="hljs-literal">undefined</span>) {
-                callback(<span class="hljs-string">'Response body was undefined.'</span>);
-            }
-
-            callback(<span class="hljs-literal">null</span>, <span class="hljs-built_in">JSON</span>.parse(body));
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">this</span>.findIssue = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(issueNumber, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issue/'</span> + issueNumber),
+      method: <span class="hljs-string">'GET'</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response, body)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">'Invalid issue number.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during findIssueStatus.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (body === <span class="hljs-literal">undefined</span>) {
+        callback(<span class="hljs-string">'Response body was undefined.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(<span class="hljs-literal">null</span>, <span class="hljs-built_in">JSON</span>.parse(body));
+    });
+  };</pre></div></div>
             
         </li>
         
@@ -339,36 +324,29 @@ later, easier</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>
-    <span class="hljs-keyword">this</span>.getUnresolvedIssueCount = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(version, callback)</span> {</span>
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/version/'</span> + version + <span class="hljs-string">'/unresolvedIssueCount'</span>),
-            method: <span class="hljs-string">'GET'</span>
-        };
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response, body)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
-                callback(<span class="hljs-string">'Invalid version.'</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
-                callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during findIssueStatus.'</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            body = <span class="hljs-built_in">JSON</span>.parse(body);
-            callback(<span class="hljs-literal">null</span>, body.issuesUnresolvedCount);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">this</span>.getUnresolvedIssueCount = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(version, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/version/'</span> + version + <span class="hljs-string">'/unresolvedIssueCount'</span>),
+      method: <span class="hljs-string">'GET'</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response, body)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">'Invalid version.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during findIssueStatus.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      body = <span class="hljs-built_in">JSON</span>.parse(body);
+      callback(<span class="hljs-literal">null</span>, body.issuesUnresolvedCount);
+    });
+  };</pre></div></div>
             
         </li>
         
@@ -394,37 +372,29 @@ later, easier</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>
-    <span class="hljs-keyword">this</span>.getProject = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(project, callback)</span> {</span>
-
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/project/'</span> + project),
-            method: <span class="hljs-string">'GET'</span>
-        };
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response, body)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
-                callback(<span class="hljs-string">'Invalid project.'</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
-                callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during getProject.'</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            body = <span class="hljs-built_in">JSON</span>.parse(body);
-            callback(<span class="hljs-literal">null</span>, body);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">this</span>.getProject = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(project, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/project/'</span> + project),
+      method: <span class="hljs-string">'GET'</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response, body)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">'Invalid project.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during getProject.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      body = <span class="hljs-built_in">JSON</span>.parse(body);
+      callback(<span class="hljs-literal">null</span>, body);
+    });
+  };</pre></div></div>
             
         </li>
         
@@ -434,6 +404,55 @@ later, easier</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <h2 id="list-all-rapid-views">List all Rapid Views</h2>
+<h3 id="takes">Takes</h3>
+<ul>
+<li>callback: for when it’s done</li>
+</ul>
+<h3 id="returns">Returns</h3>
+<ul>
+<li>error: string of the error</li>
+<li>array of rapidViews</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">this</span>.getAllRapidViews = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/rapidview'</span>, <span class="hljs-string">'rest/greenhopper/'</span>, <span class="hljs-string">'1.0'</span>),
+      method: <span class="hljs-string">'GET'</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">'Invalid URL'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during rapidView search.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.body !== <span class="hljs-literal">null</span>) {
+        callback(<span class="hljs-literal">null</span>, response.body.views);
+        <span class="hljs-keyword">return</span>;
+      }
+    });
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <h2 id="find-the-rapid-view-for-a-specified-project">Find the Rapid View for a specified project</h2>
 <h3 id="takes">Takes</h3>
@@ -449,60 +468,243 @@ later, easier</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>
-    <span class="hljs-comment">/**
-     * Finds the Rapid View that belongs to a specified project.
-     *
-     * @param projectName
-     * @param callback
-     */</span>
-    <span class="hljs-keyword">this</span>.findRapidView = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(projectName, callback)</span> {</span>
-
-        <span class="hljs-keyword">var</span> options = {
-          rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-          uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/rapidviews/list'</span>, <span class="hljs-string">'rest/greenhopper/'</span>),
-          method: <span class="hljs-string">'GET'</span>,
-          json: <span class="hljs-literal">true</span>
-        };
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response)</span> {</span>
-
-          <span class="hljs-keyword">if</span> (error) {
-              callback(error, <span class="hljs-literal">null</span>);
-              <span class="hljs-keyword">return</span>;
-          }
-
-          <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
-            callback(<span class="hljs-string">'Invalid URL'</span>);
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
+   * Finds the Rapid View that belongs to a specified project.
+   *
+   * @param projectName
+   * @param callback
+   */</span>
+  <span class="hljs-keyword">this</span>.findRapidView = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(projectName, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/rapidviews/list'</span>, <span class="hljs-string">'rest/greenhopper/'</span>),
+      method: <span class="hljs-string">'GET'</span>,
+      json: <span class="hljs-literal">true</span>
+    },
+      rapidViews,
+      i;
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">'Invalid URL'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during rapidView search.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.body !== <span class="hljs-literal">null</span>) {
+        rapidViews = response.body.views;
+        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; rapidViews.length; i++) {
+          <span class="hljs-keyword">if</span> (rapidViews[i].name.toLowerCase() === projectName.toLowerCase()) {
+            callback(<span class="hljs-literal">null</span>, rapidViews[i]);
             <span class="hljs-keyword">return</span>;
           }
-
-          <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
-            callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during rapidView search.'</span>);
-            <span class="hljs-keyword">return</span>;
-          }
-
-          <span class="hljs-keyword">if</span> (response.body !== <span class="hljs-literal">null</span>) {
-            <span class="hljs-keyword">var</span> rapidViews = response.body.views;
-            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; rapidViews.length; i++) {
-              <span class="hljs-keyword">if</span>(rapidViews[i].name.toLowerCase() === projectName.toLowerCase()) {
-                callback(<span class="hljs-literal">null</span>, rapidViews[i]);
-                <span class="hljs-keyword">return</span>;
-              }
-            }
-          }
-
-      });
-    };</pre></div></div>
+        }
+      }
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-9">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <h2 id="get-the-configuration-for-a-specified-rapid-view">Get the Configuration for a specified Rapid View</h2>
+<h3 id="takes">Takes</h3>
+<ul>
+<li>rapidViewId: id of the rapid view</li>
+<li>callback: for when it’s done</li>
+</ul>
+<h3 id="returns">Returns</h3>
+<ul>
+<li>error: string of the error</li>
+<li>config: rapid view configuration object</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
+   * Finds the Rapid View that belongs to a specified project.
+   *
+   * @param projectName
+   * @param callback
+   */</span>
+  <span class="hljs-keyword">this</span>.getRapidViewConfig = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rapidViewId, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/rapidviewconfig/editmodel?rapidViewId='</span> + rapidViewId, <span class="hljs-string">'rest/greenhopper/'</span>, <span class="hljs-string">'1.0'</span>),
+      method: <span class="hljs-string">'GET'</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">'Invalid URL'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during rapidView search.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.body) {
+        callback(<span class="hljs-literal">null</span>, response.body);
+        <span class="hljs-keyword">return</span>;
+      }
+    });
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <h2 id="get-all-data-for-a-rapidview-optionally-filtered-by-specific-sprints">Get all data for a rapidView, optionally filtered by specific sprints</h2>
+<h3 id="takes">Takes</h3>
+<ul>
+<li>rapidViewId: the id for the rapid view</li>
+<li>sprintIds: array of active sprints to filter by <optional></li>
+<li>callback: for when it’s done</li>
+</ul>
+<h3 id="returns">Returns</h3>
+<ul>
+<li>error: string with the error</li>
+<li>results: the object with the issues and additional sprint information</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
+   * Returns all data
+   *
+   * @param rapidView ID
+   * @param sprint IDs
+   * @param callback
+   */</span>
+  <span class="hljs-keyword">this</span>.getAllRapidViewData = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rapidViewId, sprintIds, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> sprints = <span class="hljs-string">''</span>,
+      options;
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Array</span>.isArray(sprintIds) &amp;&amp; sprintIds.length) {
+      sprintIds.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(id)</span> </span>{
+        sprints += (<span class="hljs-string">'&amp;activeSprints='</span> + id);
+      });
+    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> sprintIds === <span class="hljs-string">'function'</span>) {
+      callback = sprintIds;
+    }
+
+    options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/xboard/work/allData/?rapidViewId='</span> + rapidViewId + sprints, <span class="hljs-string">'rest/greenhopper/'</span>, <span class="hljs-string">'1.0'</span>),
+      method: <span class="hljs-string">'GET'</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">'Invalid URL'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during sprints search.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.body !== <span class="hljs-literal">null</span>) {
+        callback(<span class="hljs-literal">null</span>, response.body);
+        <span class="hljs-keyword">return</span>;
+      }
+    });
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <h2 id="get-a-list-of-active-sprints-belonging-to-a-rapid-view">Get a list of Active Sprints belonging to a Rapid View</h2>
+<h3 id="takes">Takes</h3>
+<ul>
+<li>rapidViewId: the id for the rapid view</li>
+<li>callback: for when it’s done</li>
+</ul>
+<h3 id="returns">Returns</h3>
+<ul>
+<li>error: string with the error</li>
+<li>sprints: the ?array? of sprints</li>
+</ul>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
+   * Returns a list of active sprints belonging to a Rapid View.
+   *
+   * @param rapidView ID
+   * @param callback
+   */</span>
+  <span class="hljs-keyword">this</span>.getActiveSprintsForRapidView = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rapidViewId, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/sprintquery/'</span> + rapidViewId, <span class="hljs-string">'rest/greenhopper/'</span>, <span class="hljs-string">'1.0'</span>),
+      method: <span class="hljs-string">'GET'</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">'Invalid URL'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during sprints search.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.body) {
+        <span class="hljs-keyword">var</span> sprints = response.body.sprints,
+          activeSprints = [],
+          i;
+        <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; sprints.length; i++) {
+          <span class="hljs-keyword">if</span> (sprints[i].state &amp;&amp; sprints[i].state === <span class="hljs-string">'ACTIVE'</span>) {
+            activeSprints.push(sprints[i]);
+          }
+        }
+        callback(<span class="hljs-literal">null</span>, activeSprints);
+        <span class="hljs-keyword">return</span>;
+      }
+    });
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <h2 id="get-a-list-of-sprints-belonging-to-a-rapid-view">Get a list of Sprints belonging to a Rapid View</h2>
 <h3 id="takes">Takes</h3>
@@ -518,55 +720,48 @@ later, easier</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-comment">/**
-     * Returns a list of sprints belonging to a Rapid View.
-     *
-     * @param rapidView ID
-     * @param callback
-     */</span>
-    <span class="hljs-keyword">this</span>.getLastSprintForRapidView = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(rapidViewId, callback)</span> {</span>
-
-        <span class="hljs-keyword">var</span> options = {
-          rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-          uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/sprintquery/'</span> + rapidViewId, <span class="hljs-string">'rest/greenhopper/'</span>),
-          method: <span class="hljs-string">'GET'</span>,
-          json:<span class="hljs-literal">true</span>
-        };
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response)</span> {</span>
-
-          <span class="hljs-keyword">if</span> (error) {
-              callback(error, <span class="hljs-literal">null</span>);
-              <span class="hljs-keyword">return</span>;
-          }
-
-          <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
-            callback(<span class="hljs-string">'Invalid URL'</span>);
-            <span class="hljs-keyword">return</span>;
-          }
-
-          <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
-            callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during sprints search.'</span>);
-            <span class="hljs-keyword">return</span>;
-          }
-
-          <span class="hljs-keyword">if</span> (response.body !== <span class="hljs-literal">null</span>) {
-            <span class="hljs-keyword">var</span> sprints = response.body.sprints;
-            callback(<span class="hljs-literal">null</span>, sprints.pop());
-            <span class="hljs-keyword">return</span>;
-          }
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
+   * Returns a list of sprints belonging to a Rapid View.
+   *
+   * @param rapidViewId
+   * @param callback
+   */</span>
+  <span class="hljs-keyword">this</span>.getLastSprintForRapidView = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rapidViewId, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/sprintquery/'</span> + rapidViewId, <span class="hljs-string">'rest/greenhopper/'</span>),
+      method: <span class="hljs-string">'GET'</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">'Invalid URL'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during sprints search.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.body !== <span class="hljs-literal">null</span>) {
+        <span class="hljs-keyword">var</span> sprints = response.body.sprints;
+        callback(<span class="hljs-literal">null</span>, sprints.pop());
+        <span class="hljs-keyword">return</span>;
+      }
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-10">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <h2 id="get-the-issues-for-a-rapidview-sprint">Get the issues for a rapidView / sprint</h2>
 <h3 id="takes">Takes</h3>
@@ -583,57 +778,49 @@ later, easier</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-comment">/**
-     * Returns sprint and issues information
-     *
-     * @param rapidView ID
-     * @param sprint ID
-     * @param callback
-     */</span>
-    <span class="hljs-keyword">this</span>.getSprintIssues = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getSprintIssues</span><span class="hljs-params">(rapidViewId, sprintId, callback)</span> {</span>
-
-      <span class="hljs-keyword">var</span> options = {
-        rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-        uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/rapid/charts/sprintreport?rapidViewId='</span> + rapidViewId + <span class="hljs-string">'&amp;sprintId='</span> + sprintId, <span class="hljs-string">'rest/greenhopper/'</span>),
-        method: <span class="hljs-string">'GET'</span>,
-        json: <span class="hljs-literal">true</span>
-      };
-
-      <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response)</span> {</span>
-
-        <span class="hljs-keyword">if</span> (error) {
-            callback(error, <span class="hljs-literal">null</span>);
-            <span class="hljs-keyword">return</span>;
-        }
-
-        <span class="hljs-keyword">if</span>( response.statusCode === <span class="hljs-number">404</span> ) {
-          callback(<span class="hljs-string">'Invalid URL'</span>);
-          <span class="hljs-keyword">return</span>;
-        }
-
-        <span class="hljs-keyword">if</span>( response.statusCode !== <span class="hljs-number">200</span> ) {
-          callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during sprints search'</span>);
-          <span class="hljs-keyword">return</span>;
-        }
-
-        <span class="hljs-keyword">if</span>(response.body !== <span class="hljs-literal">null</span>) {
-          callback(<span class="hljs-literal">null</span>, response.body);
-        } <span class="hljs-keyword">else</span> {
-          callback(<span class="hljs-string">'No body'</span>);
-        }
-
-      });
-
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
+   * Returns sprint and issues information
+   *
+   * @param rapidViewId
+   * @param sprintId
+   * @param callback
+   */</span>
+  <span class="hljs-keyword">this</span>.getSprintIssues = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getSprintIssues</span><span class="hljs-params">(rapidViewId, sprintId, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/rapid/charts/sprintreport?rapidViewId='</span> + rapidViewId + <span class="hljs-string">'&amp;sprintId='</span> + sprintId, <span class="hljs-string">'rest/greenhopper/'</span>),
+      method: <span class="hljs-string">'GET'</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">'Invalid URL'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during sprints search'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.body !== <span class="hljs-literal">null</span>) {
+        callback(<span class="hljs-literal">null</span>, response.body);
+      } <span class="hljs-keyword">else</span> {
+        callback(<span class="hljs-string">'No body'</span>);
+      }
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-11">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <h2 id="add-an-issue-to-the-project-s-current-sprint">Add an issue to the project’s current sprint</h2>
 <h3 id="takes">Takes</h3>
@@ -650,56 +837,49 @@ later, easier</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-comment">/**
-     * Adds a given issue to a project's current sprint
-     *
-     * @param issueId
-     * @param sprintId
-     * @param callback
-     */</span>
-    <span class="hljs-keyword">this</span>.addIssueToSprint = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(issueId, sprintId, callback)</span> {</span>
-
-        <span class="hljs-keyword">var</span> options = {
-          rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-          uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/sprint/'</span> + sprintId + <span class="hljs-string">'/issues/add'</span>, <span class="hljs-string">'rest/greenhopper/'</span>),
-          method: <span class="hljs-string">'PUT'</span>,
-          followAllRedirects: <span class="hljs-literal">true</span>,
-          json:<span class="hljs-literal">true</span>,
-          body: {
-            issueKeys: [issueId]
-          }
-        };
-
-        logger.log(options.uri);
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response)</span> {</span>
-
-          <span class="hljs-keyword">if</span> (error) {
-              callback(error, <span class="hljs-literal">null</span>);
-              <span class="hljs-keyword">return</span>;
-          }
-
-          <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
-            callback(<span class="hljs-string">'Invalid URL'</span>);
-            <span class="hljs-keyword">return</span>;
-          }
-
-          <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">204</span>) {
-            callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA to add to sprint.'</span>);
-            <span class="hljs-keyword">return</span>;
-          }
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
+   * Adds a given issue to a project's current sprint
+   *
+   * @param issueId
+   * @param sprintId
+   * @param callback
+   */</span>
+  <span class="hljs-keyword">this</span>.addIssueToSprint = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(issueId, sprintId, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/sprint/'</span> + sprintId + <span class="hljs-string">'/issues/add'</span>, <span class="hljs-string">'rest/greenhopper/'</span>),
+      method: <span class="hljs-string">'PUT'</span>,
+      followAllRedirects: <span class="hljs-literal">true</span>,
+      json: <span class="hljs-literal">true</span>,
+      body: {
+        issueKeys: [issueId]
+      }
+    };
+    logger.log(options.uri);
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">'Invalid URL'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">204</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA to add to sprint.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-12">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <h2 id="create-an-issue-link-between-two-issues">Create an issue link between two issues</h2>
 <h3 id="takes">Takes</h3>
@@ -715,67 +895,122 @@ later, easier</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-comment">/**
-     * Creates an issue link between two issues. Link should follow the below format:
-     *
-     * {
-     *   'linkType': 'Duplicate',
-     *   'fromIssueKey': 'HSP-1',
-     *   'toIssueKey': 'MKY-1',
-     *   'comment': {
-     *     'body': 'Linked related issue!',
-     *     'visibility': {
-     *       'type': 'GROUP',
-     *       'value': 'jira-users'
-     *     }
-     *   }
-     * }
-     *
-     * @param link
-     * @param errorCallback
-     * @param successCallback
-     */</span>
-    <span class="hljs-keyword">this</span>.issueLink = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(link, callback)</span> {</span>
-
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issueLink'</span>),
-            method: <span class="hljs-string">'POST'</span>,
-            followAllRedirects: <span class="hljs-literal">true</span>,
-            json: <span class="hljs-literal">true</span>,
-            body: link
-        };
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
-                callback(<span class="hljs-string">'Invalid project.'</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
-                callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during issueLink.'</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            callback(<span class="hljs-literal">null</span>);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/**
+   * Creates an issue link between two issues. Link should follow the below format:
+   *
+   * {
+   *   'linkType': 'Duplicate',
+   *   'fromIssueKey': 'HSP-1',
+   *   'toIssueKey': 'MKY-1',
+   *   'comment': {
+   *     'body': 'Linked related issue!',
+   *     'visibility': {
+   *       'type': 'GROUP',
+   *       'value': 'jira-users'
+   *     }
+   *   }
+   * }
+   *
+   * @param link
+   * @param callback
+   */</span>
+  <span class="hljs-keyword">this</span>.issueLink = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(link, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issueLink'</span>),
+      method: <span class="hljs-string">'POST'</span>,
+      followAllRedirects: <span class="hljs-literal">true</span>,
+      json: <span class="hljs-literal">true</span>,
+      body: link
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">'Invalid project.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during issueLink.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(<span class="hljs-literal">null</span>);
+    });
+  };
+  <span class="hljs-comment">/**
+   * Retrieves the remote links associated with the given issue.
+   *
+   * @param issueNumber - The internal id or key of the issue
+   * @param callback
+   */</span>
+  <span class="hljs-keyword">this</span>.getRemoteLinks = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getRemoteLinks</span><span class="hljs-params">(issueNumber, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issue/'</span> + issueNumber + <span class="hljs-string">'/remotelink'</span>),
+      method: <span class="hljs-string">'GET'</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">'Invalid issue number.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during request.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(<span class="hljs-literal">null</span>, response.body);
+    });
+  };
+  <span class="hljs-comment">/**
+   * Retrieves the remote links associated with the given issue.
+   *
+   * @param issueNumber - The internal id (not the issue key) of the issue
+   * @param callback
+   */</span>
+  <span class="hljs-keyword">this</span>.createRemoteLink = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">createRemoteLink</span><span class="hljs-params">(issueNumber, remoteLink, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issue/'</span> + issueNumber + <span class="hljs-string">'/remotelink'</span>),
+      method: <span class="hljs-string">'POST'</span>,
+      json: <span class="hljs-literal">true</span>,
+      body: remoteLink
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">'Cannot create remote link. Invalid issue.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">400</span>) {
+        callback(<span class="hljs-string">'Cannot create remote link. '</span> + response.body.errors.title);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during request.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(<span class="hljs-literal">null</span>, response.body);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-13">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <h2 id="get-versions-for-a-project">Get Versions for a project</h2>
 <h3 id="takes">Takes</h3>
@@ -792,46 +1027,38 @@ later, easier</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>
-    <span class="hljs-keyword">this</span>.getVersions = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(project, callback)</span> {</span>
-
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/project/'</span> + project + <span class="hljs-string">'/versions'</span>),
-            method: <span class="hljs-string">'GET'</span>
-        };
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response, body)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
-                callback(<span class="hljs-string">'Invalid project.'</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
-                callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during getVersions.'</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            body = <span class="hljs-built_in">JSON</span>.parse(body);
-            callback(<span class="hljs-literal">null</span>, body);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">this</span>.getVersions = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(project, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/project/'</span> + project + <span class="hljs-string">'/versions'</span>),
+      method: <span class="hljs-string">'GET'</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response, body)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">'Invalid project.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during getVersions.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      body = <span class="hljs-built_in">JSON</span>.parse(body);
+      callback(<span class="hljs-literal">null</span>, body);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-14">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <h2 id="create-a-version">Create a version</h2>
 <h3 id="takes">Takes</h3>
@@ -848,61 +1075,119 @@ later, easier</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-comment">/* {
-     *    "description": "An excellent version",
-     *    "name": "New Version 1",
-     *    "archived": false,
-     *    "released": true,
-     *    "releaseDate": "2010-07-05",
-     *    "userReleaseDate": "5/Jul/2010",
-     *    "project": "PXA"
-     * }
-     */</span>
-    <span class="hljs-keyword">this</span>.createVersion = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(version, callback)</span> {</span>
-
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/version'</span>),
-            method: <span class="hljs-string">'POST'</span>,
-            followAllRedirects: <span class="hljs-literal">true</span>,
-            json: <span class="hljs-literal">true</span>,
-            body: version
-        };
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response, body)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
-                callback(<span class="hljs-string">'Version does not exist or the currently authenticated user does not have permission to view it'</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">403</span>) {
-                callback(<span class="hljs-string">'The currently authenticated user does not have permission to edit the version'</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">201</span>) {
-                callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during createVersion.'</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            callback(<span class="hljs-literal">null</span>, body);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/* {
+   *    "description": "An excellent version",
+   *    "name": "New Version 1",
+   *    "archived": false,
+   *    "released": true,
+   *    "releaseDate": "2010-07-05",
+   *    "userReleaseDate": "5/Jul/2010",
+   *    "project": "PXA"
+   * }
+   */</span>
+  <span class="hljs-keyword">this</span>.createVersion = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(version, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/version'</span>),
+      method: <span class="hljs-string">'POST'</span>,
+      followAllRedirects: <span class="hljs-literal">true</span>,
+      json: <span class="hljs-literal">true</span>,
+      body: version
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response, body)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">'Version does not exist or the currently authenticated user does not have permission to view it'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">403</span>) {
+        callback(<span class="hljs-string">'The currently authenticated user does not have permission to edit the version'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">201</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during createVersion.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(<span class="hljs-literal">null</span>, body);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-15">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <h2 id="update-a-version">Update a version</h2>
+<h3 id="takes">Takes</h3>
+<ul>
+<li>version: an object of the new version</li>
+<li>callback: for when it’s done</li>
+</ul>
+<h3 id="returns">Returns</h3>
+<ul>
+<li>error: error text</li>
+<li>version: should be the same version you passed up</li>
+</ul>
+<p><a href="https://docs.atlassian.com/jira/REST/latest/#d2e510">Jira Doc</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/* {
+   *    "id": The ID of the version being updated. Required.
+   *    "description": "An excellent version",
+   *    "name": "New Version 1",
+   *    "archived": false,
+   *    "released": true,
+   *    "releaseDate": "2010-07-05",
+   *    "userReleaseDate": "5/Jul/2010",
+   *    "project": "PXA"
+   * }
+   */</span>
+  <span class="hljs-keyword">this</span>.updateVersion = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(version, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/version/'</span> + version.id),
+      method: <span class="hljs-string">'PUT'</span>,
+      followAllRedirects: <span class="hljs-literal">true</span>,
+      json: <span class="hljs-literal">true</span>,
+      body: version
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response, body)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">'Version does not exist or the currently authenticated user does not have permission to view it'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">403</span>) {
+        callback(<span class="hljs-string">'The currently authenticated user does not have permission to edit the version'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during updateVersion.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(<span class="hljs-literal">null</span>, body);
+    });
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <h2 id="pass-a-search-query-to-jira">Pass a search query to Jira</h2>
 <h3 id="takes">Takes</h3>
@@ -931,70 +1216,65 @@ later, easier</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.searchJira = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(searchString, optional, callback)</span> {</span></pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">this</span>.searchJira = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(searchString, optional, callback)</span> </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-16">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>backwards compatibility</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        optional = optional || {};
-        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Array</span>.isArray(optional)) {
-            optional = { fields: optional };
-        }
-
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/search'</span>),
-            method: <span class="hljs-string">'POST'</span>,
-            json: <span class="hljs-literal">true</span>,
-            followAllRedirects: <span class="hljs-literal">true</span>,
-            body: {
-                jql: searchString,
-                startAt: optional.startAt || <span class="hljs-number">0</span>,
-                maxResults: optional.maxResults || <span class="hljs-number">50</span>,
-                fields: optional.fields || [<span class="hljs-string">"summary"</span>, <span class="hljs-string">"status"</span>, <span class="hljs-string">"assignee"</span>, <span class="hljs-string">"description"</span>]
-            }
-        };
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response, body)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">400</span>) {
-                callback(<span class="hljs-string">'Problem with the JQL query'</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
-                callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during search.'</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            callback(<span class="hljs-literal">null</span>, body);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    optional = optional || {};
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">Array</span>.isArray(optional)) {
+      optional = {
+        fields: optional
+      };
+    }
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/search'</span>),
+      method: <span class="hljs-string">'POST'</span>,
+      json: <span class="hljs-literal">true</span>,
+      followAllRedirects: <span class="hljs-literal">true</span>,
+      body: {
+        jql: searchString,
+        startAt: optional.startAt || <span class="hljs-number">0</span>,
+        maxResults: optional.maxResults || <span class="hljs-number">50</span>,
+        fields: optional.fields || [<span class="hljs-string">"summary"</span>, <span class="hljs-string">"status"</span>, <span class="hljs-string">"assignee"</span>, <span class="hljs-string">"description"</span>]
+      }
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response, body)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">400</span>) {
+        callback(<span class="hljs-string">'Problem with the JQL query'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during search.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(<span class="hljs-literal">null</span>, body);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-17">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <h2 id="search-user-on-jira">Search user on Jira</h2>
 <h3 id="takes">Takes</h3>
@@ -1015,55 +1295,43 @@ includeInactive: If true, then inactive users are included in the results (defau
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.searchUsers = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(username, startAt, maxResults, includeActive, includeInactive, callback)</span> {</span>
-        startAt = (startAt !== <span class="hljs-literal">undefined</span>) ? startAt : <span class="hljs-number">0</span>;
-        maxResults = (maxResults !== <span class="hljs-literal">undefined</span>) ? maxResults : <span class="hljs-number">50</span>;
-        includeActive = (includeActive !== <span class="hljs-literal">undefined</span>) ? includeActive : <span class="hljs-literal">true</span>;
-        includeInactive = (includeInactive !== <span class="hljs-literal">undefined</span>) ? includeInactive : <span class="hljs-literal">false</span>;
-
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(
-                <span class="hljs-string">'/user/search?username='</span> + username +
-                <span class="hljs-string">'&amp;startAt='</span> + startAt +
-                <span class="hljs-string">'&amp;maxResults='</span> + maxResults +
-                <span class="hljs-string">'&amp;includeActive='</span> + includeActive +
-                <span class="hljs-string">'&amp;includeInactive='</span> + includeInactive),
-            method: <span class="hljs-string">'GET'</span>,
-            json: <span class="hljs-literal">true</span>,
-            followAllRedirects: <span class="hljs-literal">true</span>
-        };
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response, body)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">400</span>) {
-                callback(<span class="hljs-string">'Unable to search'</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
-                callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during search.'</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            callback(<span class="hljs-literal">null</span>, body);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">this</span>.searchUsers = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(username, startAt, maxResults, includeActive, includeInactive, callback)</span> </span>{
+    startAt = (startAt !== <span class="hljs-literal">undefined</span>) ? startAt : <span class="hljs-number">0</span>;
+    maxResults = (maxResults !== <span class="hljs-literal">undefined</span>) ? maxResults : <span class="hljs-number">50</span>;
+    includeActive = (includeActive !== <span class="hljs-literal">undefined</span>) ? includeActive : <span class="hljs-literal">true</span>;
+    includeInactive = (includeInactive !== <span class="hljs-literal">undefined</span>) ? includeInactive : <span class="hljs-literal">false</span>;
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/user/search?username='</span> + username + <span class="hljs-string">'&amp;startAt='</span> + startAt + <span class="hljs-string">'&amp;maxResults='</span> + maxResults + <span class="hljs-string">'&amp;includeActive='</span> + includeActive + <span class="hljs-string">'&amp;includeInactive='</span> + includeInactive),
+      method: <span class="hljs-string">'GET'</span>,
+      json: <span class="hljs-literal">true</span>,
+      followAllRedirects: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response, body)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">400</span>) {
+        callback(<span class="hljs-string">'Unable to search'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode !== <span class="hljs-number">200</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during search.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(<span class="hljs-literal">null</span>, body);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-18">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <h2 id="get-issues-related-to-a-user">Get issues related to a user</h2>
 <h3 id="takes">Takes</h3>
@@ -1081,21 +1349,26 @@ includeInactive: If true, then inactive users are included in the results (defau
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.getUsersIssues = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(username, open, callback)</span> {</span>
-        <span class="hljs-keyword">var</span> jql = <span class="hljs-string">"assignee = "</span> + username;
-        <span class="hljs-keyword">var</span> openText = <span class="hljs-string">' AND status in (Open, "In Progress", Reopened)'</span>;
-        <span class="hljs-keyword">if</span> (open) { jql += openText; }
-        <span class="hljs-keyword">this</span>.searchJira(jql, {}, callback);
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">this</span>.getUsersIssues = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(username, open, callback)</span> </span>{
+    <span class="hljs-keyword">if</span> (username.indexOf(<span class="hljs-string">"@"</span>) &gt; -<span class="hljs-number">1</span>) {
+      username = username.replace(<span class="hljs-string">"@"</span>, <span class="hljs-string">'\\u0040'</span>);
+    }
+    <span class="hljs-keyword">var</span> jql = <span class="hljs-string">"assignee = "</span> + username,
+      openText = <span class="hljs-string">' AND status in (Open, "In Progress", Reopened)'</span>;
+    <span class="hljs-keyword">if</span> (open) {
+      jql += openText;
+    }
+    <span class="hljs-keyword">this</span>.searchJira(jql, {}, callback);
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-19">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <h2 id="add-issue-to-jira">Add issue to Jira</h2>
 <h3 id="takes">Takes</h3>
@@ -1112,46 +1385,40 @@ includeInactive: If true, then inactive users are included in the results (defau
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.addNewIssue = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(issue, callback)</span> {</span>
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issue'</span>),
-            method: <span class="hljs-string">'POST'</span>,
-            followAllRedirects: <span class="hljs-literal">true</span>,
-            json: <span class="hljs-literal">true</span>,
-            body: issue
-        };
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response, body)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">400</span>) {
-                callback(body);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> ((response.statusCode !== <span class="hljs-number">200</span>) &amp;&amp; (response.statusCode !== <span class="hljs-number">201</span>)) {
-                callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during search.'</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            callback(<span class="hljs-literal">null</span>, body);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">this</span>.addNewIssue = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(issue, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issue'</span>),
+      method: <span class="hljs-string">'POST'</span>,
+      followAllRedirects: <span class="hljs-literal">true</span>,
+      json: <span class="hljs-literal">true</span>,
+      body: issue
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response, body)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">400</span>) {
+        callback(body);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> ((response.statusCode !== <span class="hljs-number">200</span>) &amp;&amp; (response.statusCode !== <span class="hljs-number">201</span>)) {
+        callback(response.statusCode + <span class="hljs-string">': Unable to connect to JIRA during search.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(<span class="hljs-literal">null</span>, body);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-20">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <h2 id="delete-issue-to-jira">Delete issue to Jira</h2>
 <h3 id="takes">Takes</h3>
@@ -1168,40 +1435,35 @@ includeInactive: If true, then inactive users are included in the results (defau
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.deleteIssue = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(issueNum, callback)</span> {</span>
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issue/'</span> + issueNum),
-            method: <span class="hljs-string">'DELETE'</span>,
-            followAllRedirects: <span class="hljs-literal">true</span>,
-            json: <span class="hljs-literal">true</span>
-        };
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">204</span>) {
-                callback(<span class="hljs-literal">null</span>, <span class="hljs-string">"Success"</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            callback(response.statusCode + <span class="hljs-string">': Error while deleting'</span>);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">this</span>.deleteIssue = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(issueNum, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issue/'</span> + issueNum),
+      method: <span class="hljs-string">'DELETE'</span>,
+      followAllRedirects: <span class="hljs-literal">true</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">204</span>) {
+        callback(<span class="hljs-literal">null</span>, <span class="hljs-string">"Success"</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(response.statusCode + <span class="hljs-string">': Error while deleting'</span>);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-21">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <h2 id="update-issue-in-jira">Update issue in Jira</h2>
 <h3 id="takes">Takes</h3>
@@ -1219,41 +1481,36 @@ includeInactive: If true, then inactive users are included in the results (defau
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.updateIssue = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(issueNum, issueUpdate, callback)</span> {</span>
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issue/'</span> + issueNum),
-            body: issueUpdate,
-            method: <span class="hljs-string">'PUT'</span>,
-            followAllRedirects: <span class="hljs-literal">true</span>,
-            json: <span class="hljs-literal">true</span>
-        };
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span> || response.statusCode === <span class="hljs-number">204</span>) {
-                callback(<span class="hljs-literal">null</span>, <span class="hljs-string">"Success"</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            callback(response.statusCode + <span class="hljs-string">': Error while updating'</span>);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">this</span>.updateIssue = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(issueNum, issueUpdate, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issue/'</span> + issueNum),
+      body: issueUpdate,
+      method: <span class="hljs-string">'PUT'</span>,
+      followAllRedirects: <span class="hljs-literal">true</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span> || response.statusCode === <span class="hljs-number">204</span>) {
+        callback(<span class="hljs-literal">null</span>, <span class="hljs-string">"Success"</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(response.statusCode + <span class="hljs-string">': Error while updating'</span>);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-22">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <h2 id="list-components">List Components</h2>
 <h3 id="takes">Takes</h3>
@@ -1270,66 +1527,61 @@ includeInactive: If true, then inactive users are included in the results (defau
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-comment">/*
-     * [{
-     *     "self": "http://localhostname:8090/jira/rest/api/2.0/component/1234",
-     *     "id": "1234",
-     *     "name": "name",
-     *     "description": "Description.",
-     *     "assigneeType": "PROJECT_DEFAULT",
-     *     "assignee": {
-     *         "self": "http://localhostname:8090/jira/rest/api/2.0/user?username=user@domain.com",
-     *         "name": "user@domain.com",
-     *         "displayName": "SE Support",
-     *         "active": true
-     *     },
-     *     "realAssigneeType": "PROJECT_DEFAULT",
-     *     "realAssignee": {
-     *         "self": "http://localhostname:8090/jira/rest/api/2.0/user?username=user@domain.com",
-     *         "name": "user@domain.com",
-     *         "displayName": "User name",
-     *         "active": true
-     *     },
-     *     "isAssigneeTypeValid": true
-     * }]
-     */</span>
-    <span class="hljs-keyword">this</span>.listComponents = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(project, callback)</span> {</span>
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/project/'</span> + project + <span class="hljs-string">'/components'</span>),
-            method: <span class="hljs-string">'GET'</span>,
-            json: <span class="hljs-literal">true</span>
-        };
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response, body)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span>) {
-                callback(<span class="hljs-literal">null</span>, body);
-                <span class="hljs-keyword">return</span>;
-            }
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
-                callback(<span class="hljs-string">"Project not found"</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            callback(response.statusCode + <span class="hljs-string">': Error while updating'</span>);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/*
+   * [{
+   *     "self": "http://localhostname:8090/jira/rest/api/2.0/component/1234",
+   *     "id": "1234",
+   *     "name": "name",
+   *     "description": "Description.",
+   *     "assigneeType": "PROJECT_DEFAULT",
+   *     "assignee": {
+   *         "self": "http://localhostname:8090/jira/rest/api/2.0/user?username=user@domain.com",
+   *         "name": "user@domain.com",
+   *         "displayName": "SE Support",
+   *         "active": true
+   *     },
+   *     "realAssigneeType": "PROJECT_DEFAULT",
+   *     "realAssignee": {
+   *         "self": "http://localhostname:8090/jira/rest/api/2.0/user?username=user@domain.com",
+   *         "name": "user@domain.com",
+   *         "displayName": "User name",
+   *         "active": true
+   *     },
+   *     "isAssigneeTypeValid": true
+   * }]
+   */</span>
+  <span class="hljs-keyword">this</span>.listComponents = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(project, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/project/'</span> + project + <span class="hljs-string">'/components'</span>),
+      method: <span class="hljs-string">'GET'</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response, body)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span>) {
+        callback(<span class="hljs-literal">null</span>, body);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">"Project not found"</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(response.statusCode + <span class="hljs-string">': Error while updating'</span>);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-23">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <h2 id="list-listfields">List listFields</h2>
 <h3 id="takes">Takes</h3>
@@ -1345,57 +1597,52 @@ includeInactive: If true, then inactive users are included in the results (defau
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-comment">/*
-     * [{
-     *    "id": "field",
-     *    "name": "Field",
-     *    "custom": false,
-     *    "orderable": true,
-     *    "navigable": true,
-     *    "searchable": true,
-     *    "schema": {
-     *        "type": "string",
-     *        "system": "field"
-     *    }
-     * }]
-     */</span>
-    <span class="hljs-keyword">this</span>.listFields = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(callback)</span> {</span>
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/field'</span>),
-            method: <span class="hljs-string">'GET'</span>,
-            json: <span class="hljs-literal">true</span>
-        };
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response, body)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span>) {
-                callback(<span class="hljs-literal">null</span>, body);
-                <span class="hljs-keyword">return</span>;
-            }
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
-                callback(<span class="hljs-string">"Not found"</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            callback(response.statusCode + <span class="hljs-string">': Error while updating'</span>);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/*
+   * [{
+   *    "id": "field",
+   *    "name": "Field",
+   *    "custom": false,
+   *    "orderable": true,
+   *    "navigable": true,
+   *    "searchable": true,
+   *    "schema": {
+   *        "type": "string",
+   *        "system": "field"
+   *    }
+   * }]
+   */</span>
+  <span class="hljs-keyword">this</span>.listFields = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/field'</span>),
+      method: <span class="hljs-string">'GET'</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response, body)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span>) {
+        callback(<span class="hljs-literal">null</span>, body);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">"Not found"</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(response.statusCode + <span class="hljs-string">': Error while updating'</span>);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-24">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <h2 id="list-listpriorities">List listPriorities</h2>
 <h3 id="takes">Takes</h3>
@@ -1411,52 +1658,47 @@ includeInactive: If true, then inactive users are included in the results (defau
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-comment">/*
-     * [{
-     *    "self": "http://localhostname:8090/jira/rest/api/2.0/priority/1",
-     *    "statusColor": "#ff3300",
-     *    "description": "Crashes, loss of data, severe memory leak.",
-     *    "name": "Major",
-     *    "id": "2"
-     * }]
-     */</span>
-    <span class="hljs-keyword">this</span>.listPriorities = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(callback)</span> {</span>
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/priority'</span>),
-            method: <span class="hljs-string">'GET'</span>,
-            json: <span class="hljs-literal">true</span>
-        };
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response, body)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span>) {
-                callback(<span class="hljs-literal">null</span>, body);
-                <span class="hljs-keyword">return</span>;
-            }
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
-                callback(<span class="hljs-string">"Not found"</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            callback(response.statusCode + <span class="hljs-string">': Error while updating'</span>);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/*
+   * [{
+   *    "self": "http://localhostname:8090/jira/rest/api/2.0/priority/1",
+   *    "statusColor": "#ff3300",
+   *    "description": "Crashes, loss of data, severe memory leak.",
+   *    "name": "Major",
+   *    "id": "2"
+   * }]
+   */</span>
+  <span class="hljs-keyword">this</span>.listPriorities = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/priority'</span>),
+      method: <span class="hljs-string">'GET'</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response, body)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span>) {
+        callback(<span class="hljs-literal">null</span>, body);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">"Not found"</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(response.statusCode + <span class="hljs-string">': Error while updating'</span>);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-25">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <h2 id="list-transitions">List Transitions</h2>
 <h3 id="takes">Takes</h3>
@@ -1473,80 +1715,75 @@ includeInactive: If true, then inactive users are included in the results (defau
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-comment">/*
-     *  {
-     *  "expand": "transitions",
-     *  "transitions": [
-     *      {
-     *          "id": "2",
-     *          "name": "Close Issue",
-     *          "to": {
-     *              "self": "http://localhostname:8090/jira/rest/api/2.0/status/10000",
-     *              "description": "The issue is currently being worked on.",
-     *              "iconUrl": "http://localhostname:8090/jira/images/icons/progress.gif",
-     *              "name": "In Progress",
-     *              "id": "10000"
-     *          },
-     *          "fields": {
-     *              "summary": {
-     *                  "required": false,
-     *                  "schema": {
-     *                      "type": "array",
-     *                      "items": "option",
-     *                      "custom": "com.atlassian.jira.plugin.system.customfieldtypes:multiselect",
-     *                      "customId": 10001
-     *                  },
-     *                  "name": "My Multi Select",
-     *                  "operations": [
-     *                      "set",
-     *                      "add"
-     *                  ],
-     *                  "allowedValues": [
-     *                      "red",
-     *                      "blue"
-     *                  ]
-     *              }
-     *          }
-     *      }
-     *  ]}
-     */</span>
-    <span class="hljs-keyword">this</span>.listTransitions = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(issueId, callback)</span> {</span>
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issue/'</span> + issueId + <span class="hljs-string">'/transitions?expand=transitions.fields'</span>),
-            method: <span class="hljs-string">'GET'</span>,
-            json: <span class="hljs-literal">true</span>
-        };
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response, body)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span>) {
-                callback(<span class="hljs-literal">null</span>, body.transitions);
-                <span class="hljs-keyword">return</span>;
-            }
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
-                callback(<span class="hljs-string">"Issue not found"</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            callback(response.statusCode + <span class="hljs-string">': Error while updating'</span>);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/*
+   *  {
+   *  "expand": "transitions",
+   *  "transitions": [
+   *      {
+   *          "id": "2",
+   *          "name": "Close Issue",
+   *          "to": {
+   *              "self": "http://localhostname:8090/jira/rest/api/2.0/status/10000",
+   *              "description": "The issue is currently being worked on.",
+   *              "iconUrl": "http://localhostname:8090/jira/images/icons/progress.gif",
+   *              "name": "In Progress",
+   *              "id": "10000"
+   *          },
+   *          "fields": {
+   *              "summary": {
+   *                  "required": false,
+   *                  "schema": {
+   *                      "type": "array",
+   *                      "items": "option",
+   *                      "custom": "com.atlassian.jira.plugin.system.customfieldtypes:multiselect",
+   *                      "customId": 10001
+   *                  },
+   *                  "name": "My Multi Select",
+   *                  "operations": [
+   *                      "set",
+   *                      "add"
+   *                  ],
+   *                  "allowedValues": [
+   *                      "red",
+   *                      "blue"
+   *                  ]
+   *              }
+   *          }
+   *      }
+   *  ]}
+   */</span>
+  <span class="hljs-keyword">this</span>.listTransitions = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(issueId, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issue/'</span> + issueId + <span class="hljs-string">'/transitions?expand=transitions.fields'</span>),
+      method: <span class="hljs-string">'GET'</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response, body)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span>) {
+        callback(<span class="hljs-literal">null</span>, body);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">404</span>) {
+        callback(<span class="hljs-string">"Issue not found"</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(response.statusCode + <span class="hljs-string">': Error while updating'</span>);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-26">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <h2 id="transition-issue-in-jira">Transition issue in Jira</h2>
 <h3 id="takes">Takes</h3>
@@ -1564,41 +1801,36 @@ includeInactive: If true, then inactive users are included in the results (defau
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.transitionIssue = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(issueNum, issueTransition, callback)</span> {</span>
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issue/'</span> + issueNum + <span class="hljs-string">'/transitions'</span>),
-            body: issueTransition,
-            method: <span class="hljs-string">'POST'</span>,
-            followAllRedirects: <span class="hljs-literal">true</span>,
-            json: <span class="hljs-literal">true</span>
-        };
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">204</span>) {
-                callback(<span class="hljs-literal">null</span>, <span class="hljs-string">"Success"</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            callback(response.statusCode + <span class="hljs-string">': Error while updating'</span>);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">this</span>.transitionIssue = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(issueNum, issueTransition, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issue/'</span> + issueNum + <span class="hljs-string">'/transitions'</span>),
+      body: issueTransition,
+      method: <span class="hljs-string">'POST'</span>,
+      followAllRedirects: <span class="hljs-literal">true</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">204</span>) {
+        callback(<span class="hljs-literal">null</span>, <span class="hljs-string">"Success"</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(response.statusCode + <span class="hljs-string">': Error while updating'</span>);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-27">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <h2 id="list-all-viewable-projects">List all Viewable Projects</h2>
 <h3 id="takes">Takes</h3>
@@ -1614,56 +1846,51 @@ includeInactive: If true, then inactive users are included in the results (defau
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-comment">/*
-     * Result items are in the format:
-     * {
-     *      "self": "http://www.example.com/jira/rest/api/2/project/ABC",
-     *      "id": "10001",
-     *      "key": "ABC",
-     *      "name": "Alphabetical",
-     *      "avatarUrls": {
-     *          "16x16": "http://www.example.com/jira/secure/projectavatar?size=small&amp;pid=10001",
-     *          "48x48": "http://www.example.com/jira/secure/projectavatar?size=large&amp;pid=10001"
-     *      }
-     * }
-     */</span>
-    <span class="hljs-keyword">this</span>.listProjects = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(callback)</span> {</span>
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/project'</span>),
-            method: <span class="hljs-string">'GET'</span>,
-            json: <span class="hljs-literal">true</span>
-        };
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response, body)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span>) {
-                callback(<span class="hljs-literal">null</span>, body);
-                <span class="hljs-keyword">return</span>;
-            }
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">500</span>) {
-                callback(response.statusCode + <span class="hljs-string">': Error while retrieving list.'</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            callback(response.statusCode + <span class="hljs-string">': Error while updating'</span>);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/*
+   * Result items are in the format:
+   * {
+   *      "self": "http://www.example.com/jira/rest/api/2/project/ABC",
+   *      "id": "10001",
+   *      "key": "ABC",
+   *      "name": "Alphabetical",
+   *      "avatarUrls": {
+   *          "16x16": "http://www.example.com/jira/secure/projectavatar?size=small&amp;pid=10001",
+   *          "48x48": "http://www.example.com/jira/secure/projectavatar?size=large&amp;pid=10001"
+   *      }
+   * }
+   */</span>
+  <span class="hljs-keyword">this</span>.listProjects = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/project'</span>),
+      method: <span class="hljs-string">'GET'</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response, body)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span>) {
+        callback(<span class="hljs-literal">null</span>, body);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">500</span>) {
+        callback(response.statusCode + <span class="hljs-string">': Error while retrieving list.'</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(response.statusCode + <span class="hljs-string">': Error while updating'</span>);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-28">
+        <li id="section-33">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-33">&#182;</a>
               </div>
               <h2 id="add-a-comment-to-an-issue">Add a comment to an issue</h2>
 <h3 id="takes">Takes</h3>
@@ -1681,44 +1908,42 @@ includeInactive: If true, then inactive users are included in the results (defau
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.addComment = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(issueId, comment, callback)</span>{</span>
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issue/'</span> + issueId + <span class="hljs-string">'/comment'</span>),
-            body: {
-              <span class="hljs-string">"body"</span>: comment
-            },
-            method: <span class="hljs-string">'POST'</span>,
-            followAllRedirects: <span class="hljs-literal">true</span>,
-            json: <span class="hljs-literal">true</span>
-        };
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response, body)</span> {</span>
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">201</span>) {
-                callback(<span class="hljs-literal">null</span>, <span class="hljs-string">"Success"</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">400</span>) {
-                callback(<span class="hljs-string">"Invalid Fields: "</span> + <span class="hljs-built_in">JSON</span>.stringify(body));
-                <span class="hljs-keyword">return</span>;
-            }
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">this</span>.addComment = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(issueId, comment, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issue/'</span> + issueId + <span class="hljs-string">'/comment'</span>),
+      body: {
+        <span class="hljs-string">"body"</span>: comment
+      },
+      method: <span class="hljs-string">'POST'</span>,
+      followAllRedirects: <span class="hljs-literal">true</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response, body)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">201</span>) {
+        callback(<span class="hljs-literal">null</span>, <span class="hljs-string">"Success"</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">400</span>) {
+        callback(<span class="hljs-string">"Invalid Fields: "</span> + <span class="hljs-built_in">JSON</span>.stringify(body));
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(response.statusCode + <span class="hljs-string">': Error while adding comment'</span>);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-29">
+        <li id="section-34">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-34">&#182;</a>
               </div>
               <h2 id="add-a-worklog-to-a-project">Add a worklog to a project</h2>
 <h3 id="takes">Takes</h3>
@@ -1736,80 +1961,75 @@ includeInactive: If true, then inactive users are included in the results (defau
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-comment">/*
-     * Worklog item is in the format:
-     *  {
-     *      "self": "http://www.example.com/jira/rest/api/2.0/issue/10010/worklog/10000",
-     *      "author": {
-     *          "self": "http://www.example.com/jira/rest/api/2.0/user?username=fred",
-     *          "name": "fred",
-     *          "displayName": "Fred F. User",
-     *          "active": false
-     *      },
-     *      "updateAuthor": {
-     *          "self": "http://www.example.com/jira/rest/api/2.0/user?username=fred",
-     *          "name": "fred",
-     *          "displayName": "Fred F. User",
-     *          "active": false
-     *      },
-     *      "comment": "I did some work here.",
-     *      "visibility": {
-     *          "type": "group",
-     *          "value": "jira-developers"
-     *      },
-     *      "started": "2012-11-22T04:19:46.736-0600",
-     *      "timeSpent": "3h 20m",
-     *      "timeSpentSeconds": 12000,
-     *      "id": "100028"
-     *  }
-     */</span>
-    <span class="hljs-keyword">this</span>.addWorklog = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(issueId, worklog, newEstimate, callback)</span> {</span>
-        <span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> callback == <span class="hljs-string">'undefined'</span>) {
-          callback = newEstimate
-          newEstimate = <span class="hljs-literal">false</span>
-        }
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issue/'</span> + issueId + <span class="hljs-string">'/worklog'</span> + (newEstimate ? <span class="hljs-string">"?adjustEstimate=new&amp;newEstimate="</span> + newEstimate : <span class="hljs-string">""</span>)),
-            body: worklog,
-            method: <span class="hljs-string">'POST'</span>,
-            followAllRedirects: <span class="hljs-literal">true</span>,
-            json: <span class="hljs-literal">true</span>
-        };
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response, body)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">201</span>) {
-                callback(<span class="hljs-literal">null</span>, <span class="hljs-string">"Success"</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">400</span>) {
-                callback(<span class="hljs-string">"Invalid Fields: "</span> + <span class="hljs-built_in">JSON</span>.stringify(body));
-                <span class="hljs-keyword">return</span>;
-            }
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">403</span>) {
-                callback(<span class="hljs-string">"Insufficient Permissions"</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            callback(response.statusCode + <span class="hljs-string">': Error while updating'</span>);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/*
+   * Worklog item is in the format:
+   *  {
+   *      "self": "http://www.example.com/jira/rest/api/2.0/issue/10010/worklog/10000",
+   *      "author": {
+   *          "self": "http://www.example.com/jira/rest/api/2.0/user?username=fred",
+   *          "name": "fred",
+   *          "displayName": "Fred F. User",
+   *          "active": false
+   *      },
+   *      "updateAuthor": {
+   *          "self": "http://www.example.com/jira/rest/api/2.0/user?username=fred",
+   *          "name": "fred",
+   *          "displayName": "Fred F. User",
+   *          "active": false
+   *      },
+   *      "comment": "I did some work here.",
+   *      "visibility": {
+   *          "type": "group",
+   *          "value": "jira-developers"
+   *      },
+   *      "started": "2012-11-22T04:19:46.736-0600",
+   *      "timeSpent": "3h 20m",
+   *      "timeSpentSeconds": 12000,
+   *      "id": "100028"
+   *  }
+   */</span>
+  <span class="hljs-keyword">this</span>.addWorklog = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(issueId, worklog, newEstimate, callback)</span> </span>{
+    <span class="hljs-keyword">if</span> (callback === <span class="hljs-literal">undefined</span>) {
+      callback = newEstimate;
+      newEstimate = <span class="hljs-literal">false</span>;
+    }
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issue/'</span> + issueId + <span class="hljs-string">'/worklog'</span> + (newEstimate ? <span class="hljs-string">"?adjustEstimate=new&amp;newEstimate="</span> + newEstimate : <span class="hljs-string">""</span>)),
+      body: worklog,
+      method: <span class="hljs-string">'POST'</span>,
+      followAllRedirects: <span class="hljs-literal">true</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response, body)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">201</span>) {
+        callback(<span class="hljs-literal">null</span>, <span class="hljs-string">"Success"</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">400</span>) {
+        callback(<span class="hljs-string">"Invalid Fields: "</span> + <span class="hljs-built_in">JSON</span>.stringify(body));
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">403</span>) {
+        callback(<span class="hljs-string">"Insufficient Permissions"</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(response.statusCode + <span class="hljs-string">': Error while updating'</span>);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-30">
+        <li id="section-35">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-35">&#182;</a>
               </div>
               <h2 id="list-all-issue-types">List all Issue Types</h2>
 <h3 id="takes">Takes</h3>
@@ -1825,50 +2045,45 @@ includeInactive: If true, then inactive users are included in the results (defau
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-comment">/*
-     * Result items are in the format:
-     * {
-     *  "self": "http://localhostname:8090/jira/rest/api/2.0/issueType/3",
-     *  "id": "3",
-     *  "description": "A task that needs to be done.",
-     *  "iconUrl": "http://localhostname:8090/jira/images/icons/task.gif",
-     *  "name": "Task",
-     *  "subtask": false
-     * }
-     */</span>
-    <span class="hljs-keyword">this</span>.listIssueTypes = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(callback)</span> {</span>
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issuetype'</span>),
-            method: <span class="hljs-string">'GET'</span>,
-            json: <span class="hljs-literal">true</span>
-        };
-
-        <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response, body)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span>) {
-                callback(<span class="hljs-literal">null</span>, body);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            callback(response.statusCode + <span class="hljs-string">': Error while retrieving issue types'</span>);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/*
+   * Result items are in the format:
+   * {
+   *  "self": "http://localhostname:8090/jira/rest/api/2.0/issueType/3",
+   *  "id": "3",
+   *  "description": "A task that needs to be done.",
+   *  "iconUrl": "http://localhostname:8090/jira/images/icons/task.gif",
+   *  "name": "Task",
+   *  "subtask": false
+   * }
+   */</span>
+  <span class="hljs-keyword">this</span>.listIssueTypes = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/issuetype'</span>),
+      method: <span class="hljs-string">'GET'</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response, body)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span>) {
+        callback(<span class="hljs-literal">null</span>, body);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(response.statusCode + <span class="hljs-string">': Error while retrieving issue types'</span>);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-31">
+        <li id="section-36">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-31">&#182;</a>
+                <a class="pilcrow" href="#section-36">&#182;</a>
               </div>
               <h2 id="register-a-webhook">Register a webhook</h2>
 <h3 id="takes">Takes</h3>
@@ -1885,55 +2100,50 @@ includeInactive: If true, then inactive users are included in the results (defau
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-comment">/*
-     * Success object in the format:
-     * {
-     *   name: 'my first webhook via rest',
-     *   events: [],
-     *   url: 'http://www.example.com/webhooks',
-     *   filter: '',
-     *   excludeIssueDetails: false,
-     *   enabled: true,
-     *   self: 'http://localhost:8090/rest/webhooks/1.0/webhook/5',
-     *   lastUpdatedUser: 'user',
-     *   lastUpdatedDisplayName: 'User Name',
-     *   lastUpdated: 1383247225784
-     * }
-     */</span>
-    <span class="hljs-keyword">this</span>.registerWebhook = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(webhook, callback)</span> {</span>
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/webhook'</span>, <span class="hljs-string">'rest/webhooks/'</span>, <span class="hljs-string">'1.0'</span>),
-            method: <span class="hljs-string">'POST'</span>,
-            json: <span class="hljs-literal">true</span>,
-            body: webhook
-        };
-
-        <span class="hljs-keyword">this</span>.request(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response, body)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">201</span>) {
-                callback(<span class="hljs-literal">null</span>, body);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            callback(response.statusCode + <span class="hljs-string">': Error while registering new webhook'</span>);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/*
+   * Success object in the format:
+   * {
+   *   name: 'my first webhook via rest',
+   *   events: [],
+   *   url: 'http://www.example.com/webhooks',
+   *   filter: '',
+   *   excludeIssueDetails: false,
+   *   enabled: true,
+   *   self: 'http://localhost:8090/rest/webhooks/1.0/webhook/5',
+   *   lastUpdatedUser: 'user',
+   *   lastUpdatedDisplayName: 'User Name',
+   *   lastUpdated: 1383247225784
+   * }
+   */</span>
+  <span class="hljs-keyword">this</span>.registerWebhook = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(webhook, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/webhook'</span>, <span class="hljs-string">'rest/webhooks/'</span>, <span class="hljs-string">'1.0'</span>),
+      method: <span class="hljs-string">'POST'</span>,
+      json: <span class="hljs-literal">true</span>,
+      body: webhook
+    };
+    <span class="hljs-keyword">this</span>.request(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response, body)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">201</span>) {
+        callback(<span class="hljs-literal">null</span>, body);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(response.statusCode + <span class="hljs-string">': Error while registering new webhook'</span>);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-32">
+        <li id="section-37">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-32">&#182;</a>
+                <a class="pilcrow" href="#section-37">&#182;</a>
               </div>
               <h2 id="list-all-registered-webhooks">List all registered webhooks</h2>
 <h3 id="takes">Takes</h3>
@@ -1949,54 +2159,49 @@ includeInactive: If true, then inactive users are included in the results (defau
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-comment">/*
-     * Webhook object in the format:
-     * {
-     *   name: 'my first webhook via rest',
-     *   events: [],
-     *   url: 'http://www.example.com/webhooks',
-     *   filter: '',
-     *   excludeIssueDetails: false,
-     *   enabled: true,
-     *   self: 'http://localhost:8090/rest/webhooks/1.0/webhook/5',
-     *   lastUpdatedUser: 'user',
-     *   lastUpdatedDisplayName: 'User Name',
-     *   lastUpdated: 1383247225784
-     * }
-     */</span>
-    <span class="hljs-keyword">this</span>.listWebhooks = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(callback)</span> {</span>
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/webhook'</span>, <span class="hljs-string">'rest/webhooks/'</span>, <span class="hljs-string">'1.0'</span>),
-            method: <span class="hljs-string">'GET'</span>,
-            json: <span class="hljs-literal">true</span>
-        };
-
-        <span class="hljs-keyword">this</span>.request(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response, body)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span>) {
-                callback(<span class="hljs-literal">null</span>, body);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            callback(response.statusCode + <span class="hljs-string">': Error while listing webhooks'</span>);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/*
+   * Webhook object in the format:
+   * {
+   *   name: 'my first webhook via rest',
+   *   events: [],
+   *   url: 'http://www.example.com/webhooks',
+   *   filter: '',
+   *   excludeIssueDetails: false,
+   *   enabled: true,
+   *   self: 'http://localhost:8090/rest/webhooks/1.0/webhook/5',
+   *   lastUpdatedUser: 'user',
+   *   lastUpdatedDisplayName: 'User Name',
+   *   lastUpdated: 1383247225784
+   * }
+   */</span>
+  <span class="hljs-keyword">this</span>.listWebhooks = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/webhook'</span>, <span class="hljs-string">'rest/webhooks/'</span>, <span class="hljs-string">'1.0'</span>),
+      method: <span class="hljs-string">'GET'</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.request(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response, body)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span>) {
+        callback(<span class="hljs-literal">null</span>, body);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(response.statusCode + <span class="hljs-string">': Error while listing webhooks'</span>);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-33">
+        <li id="section-38">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-33">&#182;</a>
+                <a class="pilcrow" href="#section-38">&#182;</a>
               </div>
               <h2 id="get-a-webhook-by-its-id">Get a webhook by its ID</h2>
 <h3 id="takes">Takes</h3>
@@ -2013,39 +2218,34 @@ includeInactive: If true, then inactive users are included in the results (defau
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.getWebhook = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(webhookID, callback)</span> {</span>
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/webhook/'</span> + webhookID, <span class="hljs-string">'rest/webhooks/'</span>, <span class="hljs-string">'1.0'</span>),
-            method: <span class="hljs-string">'GET'</span>,
-            json: <span class="hljs-literal">true</span>
-        };
-
-        <span class="hljs-keyword">this</span>.request(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response, body)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span>) {
-                callback(<span class="hljs-literal">null</span>, body);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            callback(response.statusCode + <span class="hljs-string">': Error while getting webhook'</span>);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">this</span>.getWebhook = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(webhookID, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/webhook/'</span> + webhookID, <span class="hljs-string">'rest/webhooks/'</span>, <span class="hljs-string">'1.0'</span>),
+      method: <span class="hljs-string">'GET'</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.request(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response, body)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span>) {
+        callback(<span class="hljs-literal">null</span>, body);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(response.statusCode + <span class="hljs-string">': Error while getting webhook'</span>);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-34">
+        <li id="section-39">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-34">&#182;</a>
+                <a class="pilcrow" href="#section-39">&#182;</a>
               </div>
               <h2 id="delete-a-registered-webhook">Delete a registered webhook</h2>
 <h3 id="takes">Takes</h3>
@@ -2062,39 +2262,34 @@ includeInactive: If true, then inactive users are included in the results (defau
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">this</span>.deleteWebhook = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(webhookID, callback)</span> {</span>
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/webhook/'</span> + webhookID, <span class="hljs-string">'rest/webhooks/'</span>, <span class="hljs-string">'1.0'</span>),
-            method: <span class="hljs-string">'DELETE'</span>,
-            json: <span class="hljs-literal">true</span>
-        };
-
-        <span class="hljs-keyword">this</span>.request(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response, body)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">204</span>) {
-                callback(<span class="hljs-literal">null</span>, <span class="hljs-string">"Success"</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            callback(response.statusCode + <span class="hljs-string">': Error while deleting webhook'</span>);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">this</span>.deleteWebhook = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(webhookID, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/webhook/'</span> + webhookID, <span class="hljs-string">'rest/webhooks/'</span>, <span class="hljs-string">'1.0'</span>),
+      method: <span class="hljs-string">'DELETE'</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.request(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">204</span>) {
+        callback(<span class="hljs-literal">null</span>, <span class="hljs-string">"Success"</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(response.statusCode + <span class="hljs-string">': Error while deleting webhook'</span>);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-35">
+        <li id="section-40">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-35">&#182;</a>
+                <a class="pilcrow" href="#section-40">&#182;</a>
               </div>
               <h2 id="describe-the-currently-authenticated-user">Describe the currently authenticated user</h2>
 <h3 id="takes">Takes</h3>
@@ -2110,54 +2305,48 @@ includeInactive: If true, then inactive users are included in the results (defau
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-comment">/*
-     * User object in the format:
-     * {
-     *   self: 'http://localhost:8090/rest/api/latest/user?username=user',
-     *   name: 'user',
-     *   loginInfo:
-     *   {
-     *     failedLoginCount: 2,
-     *     loginCount: 114,
-     *     lastFailedLoginTime: '2013-10-29T13:33:26.702+0000',
-     *     previousLoginTime: '2013-10-31T20:30:51.924+0000'
-     *   }
-     * }
-     */</span>
-
-    <span class="hljs-keyword">this</span>.getCurrentUser = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(callback)</span> {</span>
-        <span class="hljs-keyword">var</span> options = {
-            rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-            uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/session'</span>, <span class="hljs-string">'rest/auth/'</span>, <span class="hljs-string">'1'</span>),
-            method: <span class="hljs-string">'GET'</span>,
-            json: <span class="hljs-literal">true</span>
-        };
-
-        <span class="hljs-keyword">this</span>.request(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response, body)</span> {</span>
-
-            <span class="hljs-keyword">if</span> (error) {
-                callback(error, <span class="hljs-literal">null</span>);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span>) {
-                callback(<span class="hljs-literal">null</span>, body);
-                <span class="hljs-keyword">return</span>;
-            }
-
-            callback(response.statusCode + <span class="hljs-string">': Error while getting current user'</span>);
-
-        });
-    };</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/*
+   * User object in the format:
+   * {
+   *   self: 'http://localhost:8090/rest/api/latest/user?username=user',
+   *   name: 'user',
+   *   loginInfo:
+   *   {
+   *     failedLoginCount: 2,
+   *     loginCount: 114,
+   *     lastFailedLoginTime: '2013-10-29T13:33:26.702+0000',
+   *     previousLoginTime: '2013-10-31T20:30:51.924+0000'
+   *   }
+   * }
+   */</span>
+  <span class="hljs-keyword">this</span>.getCurrentUser = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/session'</span>, <span class="hljs-string">'rest/auth/'</span>, <span class="hljs-string">'1'</span>),
+      method: <span class="hljs-string">'GET'</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response, body)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span>) {
+        callback(<span class="hljs-literal">null</span>, body);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(response.statusCode + <span class="hljs-string">': Error while getting current user'</span>);
+    });
+  };</pre></div></div>
             
         </li>
         
         
-        <li id="section-36">
+        <li id="section-41">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-36">&#182;</a>
+                <a class="pilcrow" href="#section-41">&#182;</a>
               </div>
               <h2 id="retrieve-the-backlog-of-a-certain-rapid-view">Retrieve the backlog of a certain Rapid View</h2>
 <h3 id="takes">Takes</h3>
@@ -2173,89 +2362,83 @@ includeInactive: If true, then inactive users are included in the results (defau
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>	<span class="hljs-comment">/*
-	 * Backlog item is in the format:
-	 *  {
-	 *      "sprintMarkersMigrated": true,
-	 *      "issues": [
-	 *          {
-	 *              "id": 67890,
-	 *              "key": "KEY-1234",
-	 *              "summary": "Issue Summary",
-	 *              ...
-	 *          }
-	 *      ],
-	 *      "rankCustomFieldId": 12345,
-	 *      "sprints": [
-	 *          {
-	 *              "id": 123,
-	 *              "name": "Sprint Name",
-	 *              "state": "FUTURE",
-	 *              ...
-	 *          }
-	 *      ],
-	 *      "supportsPages": true,
-	 *      "projects": [
-	 *          {
-	 *              "id": 567,
-	 *              "key": "KEY",
-	 *              "name": "Project Name"
-	 *          }
-	 *      ],
-	 *      "epicData": {
-	 *          "epics": [
-	 *              {
-	 *                  "id": 9876,
-	 *                  "key": "KEY-4554",
-	 *                  "typeName": "Epic",
-	 *                  ...
-	 *              }
-	 *          ],
-	 *          "canEditEpics": true,
-	 *          "supportsPages": true
-	 *      },
-	 *      "canManageSprints": true,
-	 *      "maxIssuesExceeded": false,
-	 *      "queryResultLimit": 2147483647,
-	 *      "versionData": {
-	 *          "versionsPerProject": {
-	 *              "567": [
-	 *                  {
-	 *                      "id": 8282,
-	 *                      "name": "Version Name",
-	 *                      ...
-	 *                  }
-	 *              ]
-	 *          },
-	 *          "canCreateVersion": true
-	 *      }
-	 *  }
-	 */</span>
-	<span class="hljs-keyword">this</span>.getBacklogForRapidView = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(rapidViewId, callback)</span> {</span>
-		<span class="hljs-keyword">var</span> options = {
-			rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
-			uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/xboard/plan/backlog/data?rapidViewId='</span> + rapidViewId, <span class="hljs-string">'rest/greenhopper/'</span>),
-			method: <span class="hljs-string">'GET'</span>,
-			json: <span class="hljs-literal">true</span>
-		};
-
-		<span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, response)</span> {</span>
-			<span class="hljs-keyword">if</span> (error) {
-				callback(error, <span class="hljs-literal">null</span>);
-
-				<span class="hljs-keyword">return</span>;
-			}
-
-			<span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span>) {
-				callback(<span class="hljs-literal">null</span>, response.body);
-
-				<span class="hljs-keyword">return</span>;
-			}
-
-			callback(response.statusCode + <span class="hljs-string">': Error while retrieving backlog'</span>);
-		});
-	};
-
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-comment">/*
+   * Backlog item is in the format:
+   *  {
+   *      "sprintMarkersMigrated": true,
+   *      "issues": [
+   *          {
+   *              "id": 67890,
+   *              "key": "KEY-1234",
+   *              "summary": "Issue Summary",
+   *              ...
+   *          }
+   *      ],
+   *      "rankCustomFieldId": 12345,
+   *      "sprints": [
+   *          {
+   *              "id": 123,
+   *              "name": "Sprint Name",
+   *              "state": "FUTURE",
+   *              ...
+   *          }
+   *      ],
+   *      "supportsPages": true,
+   *      "projects": [
+   *          {
+   *              "id": 567,
+   *              "key": "KEY",
+   *              "name": "Project Name"
+   *          }
+   *      ],
+   *      "epicData": {
+   *          "epics": [
+   *              {
+   *                  "id": 9876,
+   *                  "key": "KEY-4554",
+   *                  "typeName": "Epic",
+   *                  ...
+   *              }
+   *          ],
+   *          "canEditEpics": true,
+   *          "supportsPages": true
+   *      },
+   *      "canManageSprints": true,
+   *      "maxIssuesExceeded": false,
+   *      "queryResultLimit": 2147483647,
+   *      "versionData": {
+   *          "versionsPerProject": {
+   *              "567": [
+   *                  {
+   *                      "id": 8282,
+   *                      "name": "Version Name",
+   *                      ...
+   *                  }
+   *              ]
+   *          },
+   *          "canCreateVersion": true
+   *      }
+   *  }
+   */</span>
+  <span class="hljs-keyword">this</span>.getBacklogForRapidView = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(rapidViewId, callback)</span> </span>{
+    <span class="hljs-keyword">var</span> options = {
+      rejectUnauthorized: <span class="hljs-keyword">this</span>.strictSSL,
+      uri: <span class="hljs-keyword">this</span>.makeUri(<span class="hljs-string">'/xboard/plan/backlog/data?rapidViewId='</span> + rapidViewId, <span class="hljs-string">'rest/greenhopper/'</span>),
+      method: <span class="hljs-string">'GET'</span>,
+      json: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">this</span>.doRequest(options, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(error, response)</span> </span>{
+      <span class="hljs-keyword">if</span> (error) {
+        callback(error, <span class="hljs-literal">null</span>);
+        <span class="hljs-keyword">return</span>;
+      }
+      <span class="hljs-keyword">if</span> (response.statusCode === <span class="hljs-number">200</span>) {
+        callback(<span class="hljs-literal">null</span>, response.body);
+        <span class="hljs-keyword">return</span>;
+      }
+      callback(response.statusCode + <span class="hljs-string">': Error while retrieving backlog'</span>);
+    });
+  };
 }).call(JiraApi.prototype);</pre></div></div>
             
         </li>

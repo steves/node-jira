@@ -4,9 +4,10 @@ rewire = require 'rewire'
 nodeJira    = rewire '../lib/jira'
 
 describe "Node Jira Tests", ->
-    makeUrl = (path, altBase) ->
+    makeUrl = (path, altBase, altGreenhopper) ->
         base = 'rest/api/2/'
         base = 'rest/greenhopper/2/' if altBase?
+        base = 'rest/greenhopper/1.0/' if altGreenhopper?
         decodeURIComponent(
             url.format
                 protocol: 'http:'
@@ -166,6 +167,123 @@ describe "Node Jira Tests", ->
                 views: [name: 'ABC']
 
         expect(@cb).toHaveBeenCalledWith null, name: 'ABC'
+
+    it "Gets the configuration for a Rapid View", ->
+        options =
+            rejectUnauthorized: true
+            uri: makeUrl("rapidviewconfig/editmodel?rapidViewId=1", null, true)
+            method: 'GET'
+            json: true
+            auth:
+              user: 'test'
+              pass: 'test'
+
+        @jira.getRapidViewConfig '1', @cb
+        expect(@jira.request)
+            .toHaveBeenCalledWith options, jasmine.any(Function)
+
+        # Invalid URL
+        @jira.request.mostRecentCall.args[1] null, statusCode:404, null
+        expect(@cb).toHaveBeenCalledWith 'Invalid URL'
+
+        @jira.request.mostRecentCall.args[1] null, statusCode:401, null
+        expect(@cb).toHaveBeenCalledWith(
+            '401: Unable to connect to JIRA during rapidView search.')
+
+        # Successful Request
+        @jira.request.mostRecentCall.args[1] null,
+            statusCode:200,
+            body:
+                id: 1
+
+        expect(@cb).toHaveBeenCalledWith null, id: 1
+
+    it "Gets all Rapid View data", ->
+        options =
+            rejectUnauthorized: true
+            uri: makeUrl("xboard/work/allData/?rapidViewId=1", null, true)
+            method: 'GET'
+            json: true
+            auth:
+              user: 'test'
+              pass: 'test'
+
+        @jira.getAllRapidViewData 1, @cb
+        expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
+
+        # Invalid URL 
+        @jira.request.mostRecentCall.args[1] null, statusCode:404, null
+        expect(@cb).toHaveBeenCalledWith('Invalid URL')
+
+        @jira.request.mostRecentCall.args[1] null, statusCode:401, null
+        expect(@cb).toHaveBeenCalledWith(
+            '401: Unable to connect to JIRA during sprints search.')
+
+        # Successful Request
+        @jira.request.mostRecentCall.args[1] null,
+            statusCode:200,
+            body:
+                rapidViewId: 1
+
+        expect(@cb).toHaveBeenCalledWith null, rapidViewId: 1
+
+    it "Gets all Rapid View data, limited to specified sprint", ->
+        options =
+            rejectUnauthorized: true
+            uri: makeUrl("xboard/work/allData/?rapidViewId=1&activeSprints=2", null, true)
+            method: 'GET'
+            json: true
+            auth:
+              user: 'test'
+              pass: 'test'
+
+        @jira.getAllRapidViewData 1, [2], @cb
+        expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
+
+        # Invalid URL 
+        @jira.request.mostRecentCall.args[1] null, statusCode:404, null
+        expect(@cb).toHaveBeenCalledWith('Invalid URL')
+
+        @jira.request.mostRecentCall.args[1] null, statusCode:401, null
+        expect(@cb).toHaveBeenCalledWith(
+            '401: Unable to connect to JIRA during sprints search.')
+
+        # Successful Request
+        @jira.request.mostRecentCall.args[1] null,
+            statusCode:200,
+            body:
+                rapidViewId: 1
+
+        expect(@cb).toHaveBeenCalledWith null, rapidViewId: 1
+
+    it "Gets all active sprints for a Rapid View", ->
+        options =
+            rejectUnauthorized: true
+            uri: makeUrl("sprintquery/1", null, true)
+            method: 'GET'
+            json: true
+            auth:
+              user: 'test'
+              pass: 'test'
+
+        @jira.getActiveSprintsForRapidView 1, @cb
+        expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
+
+        # Invalid URL 
+        @jira.request.mostRecentCall.args[1] null, statusCode:404, null
+        expect(@cb).toHaveBeenCalledWith 'Invalid URL'
+
+        @jira.request.mostRecentCall.args[1] null, statusCode:401, null
+        expect(@cb).toHaveBeenCalledWith(
+            '401: Unable to connect to JIRA during sprints search.')
+
+        # Successful Request
+        @jira.request.mostRecentCall.args[1] null,
+            statusCode:200,
+            body:
+                sprints: [state: 'ACTIVE']
+
+        expect(@cb).toHaveBeenCalledWith null, [state: 'ACTIVE']
 
     it "Gets the last sprint for a Rapid View", ->
         options =
