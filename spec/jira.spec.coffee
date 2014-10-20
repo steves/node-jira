@@ -198,6 +198,64 @@ describe "Node Jira Tests", ->
 
         expect(@cb).toHaveBeenCalledWith null, id: 1
 
+    it "Gets all Rapid View data", ->
+        options =
+            rejectUnauthorized: true
+            uri: makeUrl("xboard/work/allData/?rapidViewId=1", null, true)
+            method: 'GET'
+            json: true
+            auth:
+              user: 'test'
+              pass: 'test'
+
+        @jira.getAllRapidViewData 1, @cb
+        expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
+
+        # Invalid URL 
+        @jira.request.mostRecentCall.args[1] null, statusCode:404, null
+        expect(@cb).toHaveBeenCalledWith('Invalid URL')
+
+        @jira.request.mostRecentCall.args[1] null, statusCode:401, null
+        expect(@cb).toHaveBeenCalledWith(
+            '401: Unable to connect to JIRA during sprints search.')
+
+        # Successful Request
+        @jira.request.mostRecentCall.args[1] null,
+            statusCode:200,
+            body:
+                rapidViewId: 1
+
+        expect(@cb).toHaveBeenCalledWith null, rapidViewId: 1
+
+    it "Gets all Rapid View data, limited to specified sprint", ->
+        options =
+            rejectUnauthorized: true
+            uri: makeUrl("xboard/work/allData/?rapidViewId=1&activeSprints=2", null, true)
+            method: 'GET'
+            json: true
+            auth:
+              user: 'test'
+              pass: 'test'
+
+        @jira.getAllRapidViewData 1, [2], @cb
+        expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
+
+        # Invalid URL 
+        @jira.request.mostRecentCall.args[1] null, statusCode:404, null
+        expect(@cb).toHaveBeenCalledWith('Invalid URL')
+
+        @jira.request.mostRecentCall.args[1] null, statusCode:401, null
+        expect(@cb).toHaveBeenCalledWith(
+            '401: Unable to connect to JIRA during sprints search.')
+
+        # Successful Request
+        @jira.request.mostRecentCall.args[1] null,
+            statusCode:200,
+            body:
+                rapidViewId: 1
+
+        expect(@cb).toHaveBeenCalledWith null, rapidViewId: 1
+
     it "Gets all active sprints for a Rapid View", ->
         options =
             rejectUnauthorized: true
