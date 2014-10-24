@@ -527,6 +527,10 @@ describe "Node Jira Tests", ->
               user: 'test'
               pass: 'test'
 
+        visibility =
+            type: "role"
+            value: "Administrators"
+
         @jira.addComment 1, 'aComment', @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
 
@@ -537,6 +541,13 @@ describe "Node Jira Tests", ->
         # Successful Request
         @jira.request.mostRecentCall.args[1] null, statusCode:201
         expect(@cb).toHaveBeenCalledWith null, "Success"
+
+        # Comments with predetermined level of visibility
+        @jira.request.reset()
+        @jira.addComment 1, "aComment", @cb, visibility
+        #extend options object
+        options.body.visibility = visibility
+        expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
 
     it "Adds a worklog to a project", ->
         options =
