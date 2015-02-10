@@ -34,8 +34,8 @@ describe "Node Jira Tests", ->
             .toHaveBeenCalledWith(options, jasmine.any(Function))
 
     it "Sets OAuth oauth for the requests if oauth is passed in", ->
-        options = 
-            oauth = 
+        options =
+            oauth =
               consumer_key: 'ck'
               consumer_secret: 'cs'
               access_token: 'ac'
@@ -65,7 +65,7 @@ describe "Node Jira Tests", ->
     it "Finds an issue", ->
         options =
             rejectUnauthorized: true
-            uri: makeUrl "issue/1"
+            uri: makeUrl "issue/1?expand=renderedFields"
             method: 'GET'
             auth:
               user: 'test'
@@ -81,7 +81,7 @@ describe "Node Jira Tests", ->
         # Unable to find issue
         @jira.request.mostRecentCall.args[1] null, statusCode:401, null
         expect(@cb).toHaveBeenCalledWith(
-            '401: Unable to connect to JIRA during findIssueStatus.')
+            '401: Unable to connect to JIRA during findIssue.')
 
         # Successful Request
         @jira.request.mostRecentCall.args[1] null,
@@ -109,7 +109,7 @@ describe "Node Jira Tests", ->
         @jira.request.mostRecentCall.args[1] null, statusCode:401, null
         expect(@cb).toHaveBeenCalledWith(
             '401: Unable to connect to JIRA during findIssueStatus.')
-        
+
         # Successful Request
         @jira.request.mostRecentCall.args[1] null,
             statusCode:200, '{"issuesUnresolvedCount":1}'
@@ -151,7 +151,7 @@ describe "Node Jira Tests", ->
         expect(@jira.request)
             .toHaveBeenCalledWith options, jasmine.any(Function)
 
-        # Invalid URL 
+        # Invalid URL
         @jira.request.mostRecentCall.args[1] null, statusCode:404, null
         expect(@cb).toHaveBeenCalledWith 'Invalid URL'
 
@@ -180,7 +180,7 @@ describe "Node Jira Tests", ->
         @jira.getLastSprintForRapidView 1, @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
 
-        # Invalid URL 
+        # Invalid URL
         @jira.request.mostRecentCall.args[1] null, statusCode:404, null
         expect(@cb).toHaveBeenCalledWith 'Invalid URL'
 
@@ -195,7 +195,7 @@ describe "Node Jira Tests", ->
                 sprints: [name: 'ABC']
 
         expect(@cb).toHaveBeenCalledWith null, name: 'ABC'
-        
+
     it "Adds an issue to a sprint", ->
         options =
             rejectUnauthorized: true
@@ -212,7 +212,7 @@ describe "Node Jira Tests", ->
         @jira.addIssueToSprint 2, 1, @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
 
-        # Invalid URL 
+        # Invalid URL
         @jira.request.mostRecentCall.args[1] null, statusCode:404, null
         expect(@cb).toHaveBeenCalledWith 'Invalid URL'
 
@@ -363,7 +363,7 @@ describe "Node Jira Tests", ->
         spyOn @jira, 'searchJira'
         expected = "assignee = test AND status in (Open, \"In Progress\",
  Reopened)"
-        
+
         @jira.getUsersIssues 'test', true, @cb
         expect(@jira.searchJira).toHaveBeenCalledWith expected, {},
             jasmine.any(Function)
@@ -396,7 +396,7 @@ describe "Node Jira Tests", ->
      it "Gets ALL a specified User's Issues", ->
         spyOn @jira, 'searchJira'
         expected = "assignee = test"
-        
+
         @jira.getUsersIssues 'test', false, @cb
         expect(@jira.searchJira).toHaveBeenCalledWith expected, {},
             jasmine.any(Function)
@@ -689,4 +689,3 @@ describe "Node Jira Tests", ->
         @jira.request.mostRecentCall.args[1] null, response
         expect(@cb).toHaveBeenCalledWith(
           'Cannot create remote link. test')
-
