@@ -16,6 +16,9 @@
     "node": ">=0.4.0"
   },
   "main": "./lib/jira.js",
+  "files": [
+    "lib/"
+  ],
   "licenses": [
     {
       "type": "The MIT License",
