@@ -712,3 +712,19 @@ describe "Node Jira Tests", ->
         expect(@cb).toHaveBeenCalledWith(
           'Cannot create remote link. test')
 
+      it "Get Filter by Id", ->
+          options =
+              rejectUnauthorized: true
+              uri: makeUrl "filter/1"
+              method: 'GET'
+              json: true
+              auth:
+                  user: 'test'
+                  pass: 'test'
+
+          @jira.getFilter 1, @cb
+          expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
+
+          # Invalid Filter
+          @jira.request.mostRecentCall.args[1] null, statusCode:404, null
+          expect(@cb).toHaveBeenCalledWith 'Cannot find the requested filter'
