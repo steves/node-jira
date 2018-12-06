@@ -24,9 +24,38 @@ describe "Node Jira Tests", ->
         options =
             rejectUnauthorized: true 
             headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64')
-        @jira = new nodeJira.JiraApi 'http', 'localhost', 80, 2, false, null, options 
+        @jira = new nodeJira.JiraApiWithOptions 'http', 'localhost', 80, 2, false, null, options 
         spyOn @jira, 'request'
         @cb = jasmine.createSpy 'callback'
+
+    it "Sets basic auth if oauth is not passed in with JiraApi old method", ->
+        options =
+            rejectUnauthorized: false,
+            auth :
+              user: 'test'
+              pass: 'test'
+        @jira = new nodeJira.JiraApi 'http', 'localhost', 80, 'test', 'test', 2
+        spyOn @jira, 'request'
+
+        @jira.doRequest options, @cb
+        expect(@jira.request)
+            .toHaveBeenCalledWith(options, jasmine.any(Function))
+
+    it "Sets OAuth oauth for the requests if oauth is passed in with JiraApi old method", ->
+        options = 
+            rejectUnauthorized: false,
+            oauth : 
+              consumer_key: 'ck'
+              consumer_secret: 'cs'
+              access_token: 'ac'
+              access_token_secret: 'acs'
+        # oauth = new OAuth.OAuth(null, null, oauth.consumer_key, oauth.consumer_secret, null, null, "RSA-SHA1")
+        @jira = new nodeJira.JiraApi 'http', 'localhost', 80, 'test', 'test', 2, false, false, options.oauth
+        spyOn @jira, 'request'
+
+        @jira.doRequest options, @cb
+        expect(@jira.request)
+            .toHaveBeenCalledWith(options, jasmine.any(Function))
 
     it "Sets basic auth if oauth is not passed in", ->
         options =
@@ -44,7 +73,7 @@ describe "Node Jira Tests", ->
               access_token: 'ac'
               access_token_secret: 'acs'
         # oauth = new OAuth.OAuth(null, null, oauth.consumer_key, oauth.consumer_secret, null, null, "RSA-SHA1")
-        @jira = new nodeJira.JiraApi 'http', 'localhost', 80, 2, false, null, options
+        @jira = new nodeJira.JiraApiWithOptions 'http', 'localhost', 80, 2, false, null, options
         spyOn @jira, 'request'
 
         @jira.doRequest options, @cb
