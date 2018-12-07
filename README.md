@@ -29,9 +29,36 @@ or
 
 ### Create the JIRA client ###
 
+#### Create a simple JIRA client ####
+
     JiraApi = require('jira').JiraApi;
     
     var jira = new JiraApi('https', config.host, config.port, config.user, config.password, '2.0.alpha1');
+
+#### Need special HTTP settings ####
+
+In the case of, if some particular settings are needed to sign in like proxy authentication, for example. This can be done by passing the HTTP request options as parameter of the jiraApiWithOptions method. 
+
+    const HttpProxyAgent = require("http-proxy-agent");
+    const agent = new HttpProxyAgent("http://proxy");
+    const options = {
+    	    "agent": agent, // proxy setting
+    		rejectUnauthorized: this.strictSSL, // strict ssl option
+    	    headers: {
+    	        "Proxy-Authorization": "Bearer authentication_token", // proxy authentification
+    	        "Authorization": 'Basic ' + Buffer.from(username + ':' + password).toString('base64') // basic authentication
+    	    },
+    	    oauth: { // in the case of oauth instead of basic
+    	    	    consumer_key: oauth.consumer_key,
+    	    	    consumer_secret: oauth.consumer_secret,
+    	    	    token: oauth.access_token,
+    	    	    token_secret: oauth.access_token_secret
+    	    }
+    }
+    JiraApiWithOptions = require('jira').JiraApiWithOptions;
+    
+    var jira = new JiraApiWithOptions('https', 'server.com', '443', '2.0.alpha1', true, 'jira', options);
+
 
 ### Find the status of an issue ###
 
