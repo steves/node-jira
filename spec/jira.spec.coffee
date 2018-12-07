@@ -1,4 +1,5 @@
 url         = require 'url'
+bufferFrom  = require('buffer-from')
 
 rewire = require 'rewire'
 nodeJira    = rewire '../lib/jira'
@@ -20,22 +21,30 @@ describe "Node Jira Tests", ->
         OAuth.OAuth.prototype = jasmine.createSpyObj 'OAuth', ['getOAuthRequestToken', '_encodeData']
         nodeJira.__set__ "OAuth", OAuth
 
-        @jira = new nodeJira.JiraApi 'http', 'localhost', 80, 'test', 'test', 2
+        options =
+            rejectUnauthorized: true 
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64')
+        @jira = new nodeJira.JiraApiWithOptions 'http', 'localhost', 80, 2, false, null, options 
         spyOn @jira, 'request'
         @cb = jasmine.createSpy 'callback'
 
-    it "Sets basic auth if oauth is not passed in", ->
+    it "Sets basic auth if oauth is not passed in with JiraApi old method", ->
         options =
-            auth =
+            rejectUnauthorized: false,
+            auth :
               user: 'test'
               pass: 'test'
+        @jira = new nodeJira.JiraApi 'http', 'localhost', 80, 'test', 'test', 2
+        spyOn @jira, 'request'
+
         @jira.doRequest options, @cb
         expect(@jira.request)
             .toHaveBeenCalledWith(options, jasmine.any(Function))
 
-    it "Sets OAuth oauth for the requests if oauth is passed in", ->
+    it "Sets OAuth oauth for the requests if oauth is passed in with JiraApi old method", ->
         options = 
-            oauth = 
+            rejectUnauthorized: false,
+            oauth : 
               consumer_key: 'ck'
               consumer_secret: 'cs'
               access_token: 'ac'
@@ -48,28 +57,35 @@ describe "Node Jira Tests", ->
         expect(@jira.request)
             .toHaveBeenCalledWith(options, jasmine.any(Function))
 
-    it "Sets strictSSL to false when passed in", ->
-        expected = false
-        jira = new nodeJira.JiraApi 'http', 'localhost', 80, 'test', 'test', 2, false, expected
-        expect(jira.strictSSL).toEqual(expected)
+    it "Sets basic auth if oauth is not passed in", ->
+        options =
+            rejectUnauthorized: false 
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
+        @jira.doRequest options, @cb
+        expect(@jira.request)
+            .toHaveBeenCalledWith(options, jasmine.any(Function))
 
-    it "Sets strictSSL to true when passed in", ->
-        expected = true
-        jira = new nodeJira.JiraApi 'http', 'localhost', 80, 'test', 'test', 2, false, expected
-        expect(jira.strictSSL).toEqual(expected)
+    it "Sets OAuth oauth for the requests if oauth is passed in", ->
+        options = 
+            oauth:
+              consumer_key: 'ck'
+              consumer_secret: 'cs'
+              access_token: 'ac'
+              access_token_secret: 'acs'
+        # oauth = new OAuth.OAuth(null, null, oauth.consumer_key, oauth.consumer_secret, null, null, "RSA-SHA1")
+        @jira = new nodeJira.JiraApiWithOptions 'http', 'localhost', 80, 2, false, null, options
+        spyOn @jira, 'request'
 
-    it "Sets strictSSL to true when not passed in", ->
-        expected = true
-        expect(@jira.strictSSL).toEqual(expected)
+        @jira.doRequest options, @cb
+        expect(@jira.request)
+            .toHaveBeenCalledWith(options, jasmine.any(Function))
 
     it "Finds an issue", ->
         options =
             rejectUnauthorized: true
             uri: makeUrl "issue/1"
             method: 'GET'
-            auth:
-              user: 'test'
-              pass: 'test'
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
         @jira.findIssue 1, @cb
         expect(@jira.request)
             .toHaveBeenCalledWith(options, jasmine.any(Function))
@@ -93,9 +109,7 @@ describe "Node Jira Tests", ->
             rejectUnauthorized: true
             uri: makeUrl "version/1/unresolvedIssueCount"
             method: 'GET'
-            auth:
-              user: 'test'
-              pass: 'test'
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.getUnresolvedIssueCount 1, @cb
         expect(@jira.request)
@@ -120,9 +134,7 @@ describe "Node Jira Tests", ->
             rejectUnauthorized: true
             uri: makeUrl "project/ABC"
             method: 'GET'
-            auth:
-              user: 'test'
-              pass: 'test'
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.getProject 'ABC', @cb
         expect(@jira.request)
@@ -143,9 +155,7 @@ describe "Node Jira Tests", ->
             uri: makeUrl("rapidviews/list", true)
             method: 'GET'
             json: true
-            auth:
-              user: 'test'
-              pass: 'test'
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.findRapidView 'ABC', @cb
         expect(@jira.request)
@@ -173,9 +183,7 @@ describe "Node Jira Tests", ->
             uri: makeUrl("sprintquery/1", true)
             method: 'GET'
             json: true
-            auth:
-              user: 'test'
-              pass: 'test'
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.getLastSprintForRapidView 1, @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
@@ -205,9 +213,7 @@ describe "Node Jira Tests", ->
             followAllRedirects: true
             body:
                 issueKeys: [2]
-            auth:
-              user: 'test'
-              pass: 'test'
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.addIssueToSprint 2, 1, @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
@@ -228,9 +234,7 @@ describe "Node Jira Tests", ->
             json: true
             body: 'test'
             followAllRedirects: true
-            auth:
-              user: 'test'
-              pass: 'test'
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.issueLink 'test', @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
@@ -252,9 +256,7 @@ describe "Node Jira Tests", ->
             rejectUnauthorized: true
             uri: makeUrl "project/ABC/versions"
             method: 'GET'
-            auth:
-              user: 'test'
-              pass: 'test'
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.getVersions 'ABC', @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
@@ -280,9 +282,7 @@ describe "Node Jira Tests", ->
             json: true
             body: 'ABC'
             followAllRedirects: true
-            auth:
-              user: 'test'
-              pass: 'test'
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.createVersion 'ABC', @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
@@ -308,6 +308,7 @@ describe "Node Jira Tests", ->
 
     it "Passes a search query to Jira, default options", ->
         fields = ["summary", "status", "assignee", "description"]
+        expand = ["schema", "names"]
         options =
             rejectUnauthorized: true
             uri: makeUrl "search"
@@ -319,9 +320,8 @@ describe "Node Jira Tests", ->
                 startAt: 0
                 maxResults: 50
                 fields: fields
-            auth:
-              user: 'test'
-              pass: 'test'
+                expand: expand
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.searchJira 'aJQLstring', {}, @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
@@ -341,6 +341,7 @@ describe "Node Jira Tests", ->
 
     it "Passes a search query to Jira, non-default options", ->
         fields = ["assignee", "description", "test"]
+        expand = ["schema", "names"]
         options =
             rejectUnauthorized: true
             uri: makeUrl "search"
@@ -352,9 +353,8 @@ describe "Node Jira Tests", ->
                 startAt: 200
                 maxResults: 100
                 fields: fields
-            auth:
-              user: 'test'
-              pass: 'test'
+                expand: expand
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.searchJira 'aJQLstring', { maxResults: 100, fields: fields, startAt: 200 }, @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
@@ -383,9 +383,7 @@ describe "Node Jira Tests", ->
             uri: makeUrl("rapid/charts/sprintreport?rapidViewId=1&sprintId=1", true)
             method: 'GET'
             json: true
-            auth:
-              user: 'test'
-              pass: 'test'
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.getSprintIssues 1, 1, @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
@@ -408,9 +406,7 @@ describe "Node Jira Tests", ->
             method: 'DELETE'
             json: true
             followAllRedirects: true
-            auth:
-              user: 'test'
-              pass: 'test'
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.deleteIssue 1, @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
@@ -430,9 +426,7 @@ describe "Node Jira Tests", ->
             method: 'PUT'
             json: true
             followAllRedirects: true
-            auth:
-              user: 'test'
-              pass: 'test'
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.updateIssue 1, 'updateGoesHere', @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
@@ -450,9 +444,7 @@ describe "Node Jira Tests", ->
             uri: makeUrl "issue/1/transitions?expand=transitions.fields"
             method: 'GET'
             json: true
-            auth:
-              user: 'test'
-              pass: 'test'
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.listTransitions 1, @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
@@ -476,9 +468,7 @@ describe "Node Jira Tests", ->
             method: 'POST'
             followAllRedirects: true
             json: true
-            auth:
-              user: 'test'
-              pass: 'test'
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.transitionIssue 1, 'someTransition', @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
@@ -496,9 +486,7 @@ describe "Node Jira Tests", ->
             uri: makeUrl "project"
             method: 'GET'
             json: true
-            auth:
-              user: 'test'
-              pass: 'test'
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.listProjects @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
@@ -523,9 +511,7 @@ describe "Node Jira Tests", ->
             method: 'POST'
             followAllRedirects: true
             json: true
-            auth:
-              user: 'test'
-              pass: 'test'
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.addComment 1, 'aComment', @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
@@ -546,9 +532,7 @@ describe "Node Jira Tests", ->
             method: 'POST'
             followAllRedirects: true
             json: true
-            auth:
-                user: 'test'
-                pass: 'test'
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.addWatcher 1, "testuser", @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
@@ -568,9 +552,7 @@ describe "Node Jira Tests", ->
             method: 'POST'
             followAllRedirects: true
             json: true
-            auth:
-              user: 'test'
-              pass: 'test'
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.addWorklog 1, 'aWorklog', @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
@@ -597,9 +579,7 @@ describe "Node Jira Tests", ->
             method: 'POST'
             followAllRedirects: true
             json: true
-            auth:
-              user: 'test'
-              pass: 'test'
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.addWorklog 1, 'aWorklog', '1h', @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
@@ -624,9 +604,7 @@ describe "Node Jira Tests", ->
             uri: makeUrl "issuetype"
             method: 'GET'
             json: true
-            auth:
-              user: 'test'
-              pass: 'test'
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.listIssueTypes @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
@@ -644,9 +622,7 @@ describe "Node Jira Tests", ->
             uri: makeUrl("xboard/plan/backlog/data?rapidViewId=123", true)
             method: 'GET'
             json: true
-            auth:
-              user: 'test'
-              pass: 'test'
+            headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.getBacklogForRapidView 123, @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
@@ -664,9 +640,7 @@ describe "Node Jira Tests", ->
           uri: makeUrl "issue/1/remotelink"
           method: 'GET'
           json: true
-          auth:
-            user: 'test'
-            pass: 'test'
+          headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
         @jira.getRemoteLinks 1, @cb
         expect(@jira.request)
         .toHaveBeenCalledWith(options, jasmine.any(Function))
@@ -692,9 +666,7 @@ describe "Node Jira Tests", ->
           method: 'POST'
           json: true
           body: 'test'
-          auth:
-            user: 'test'
-            pass: 'test'
+          headers: 'Authorization': 'Basic ' + bufferFrom('test:test').toString('base64');
 
         @jira.createRemoteLink 1, 'test', @cb
         expect(@jira.request).toHaveBeenCalledWith options, jasmine.any(Function)
